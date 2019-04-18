@@ -9,28 +9,29 @@ import static org.junit.Assert.*;
 
 public class PrimeTaskTest {
 
-    private static PrimeTask task;
-
-    @BeforeClass
-    public static void setUp() {
-        task = new PrimeTask();
-    }
-
     @Test
     public void isPrime() {
-        assertTrue(task.isPrime(5));
-        assertFalse(task.isPrime(4));
-        assertFalse(task.isPrime(1));
+        assertTrue(PrimeTask.isPrime(5));
+        assertFalse(PrimeTask.isPrime(4));
+        assertFalse(PrimeTask.isPrime(1));
     }
 
     @Test
     public void primesInRange() {
         ArrayList<Long> list = new ArrayList<>();
-        assertEquals(list, task.primesInRange(-3, 1));
+        assertEquals(list, PrimeTask.primesInRange(-3, 1));
 
         list.add(3L);
         list.add(5L);
         list.add(7L);
-        assertEquals(list, task.primesInRange(0, 8));
+        assertEquals(list, PrimeTask.primesInRange(0, 8));
+    }
+
+    @Test
+    public void call() {
+        ArrayList<Long> list = new ArrayList<>();
+        list.add(11L);
+        list.add(13L);
+        assertEquals(list, new PrimeTask(10L, 13L).call());
     }
 }

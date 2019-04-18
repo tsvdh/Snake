@@ -1,15 +1,38 @@
 package client;
 
+import javafx.concurrent.Task;
+
 import java.util.ArrayList;
 
-public class PrimeTask {
+public class PrimeTask extends Task<ArrayList<Long>> {
 
-    public static void main(String[] args) {
-        PrimeTask task = new PrimeTask();
-        System.out.println(task.isPrime(10000019));
+    private Long from;
+    private Long to;
+
+    /**
+     * Constructs a new PrimeTask.
+     *
+     * @param from Where to begin looking for primes.
+     * @param to Where to end looking for primes.
+     */
+    public PrimeTask(Long from, Long to) {
+        this.from = from;
+        this.to = to;
     }
 
-    public ArrayList<Long> primesInRange(long from, long to) {
+    @Override
+    protected ArrayList<Long> call() {
+        return primesInRange(from, to);
+    }
+
+    /**
+     * Calculates primes in the given range.
+     *
+     * @param from Where to begin looking for primes.
+     * @param to Where to end looking for primes.
+     * @return An ArrayList with all the primes in the given range.
+     */
+    public static ArrayList<Long> primesInRange(long from, long to) {
         ArrayList<Long> list = new ArrayList<>();
         for (long i = from; i <= to; i++) {
             if (isPrime(i)) {
@@ -19,7 +42,13 @@ public class PrimeTask {
         return list;
     }
 
-    public boolean isPrime(long number) {
+    /**
+     * Checks whether a number is prime.
+     *
+     * @param number The number to check.
+     * @return A boolean indicating the result of the check.
+     */
+    public static boolean isPrime(long number) {
         if (number < 3) {
             return false;
         }
