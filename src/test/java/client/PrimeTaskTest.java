@@ -8,6 +8,7 @@ public class PrimeTaskTest {
 
     @Test
     public void firstMethod() {
-        assertEquals(18, PrimeTask.firstMethod());
+        PrimeTask task = new PrimeTask();
+        assertEquals(18, task.firstMethod());
     }
 }

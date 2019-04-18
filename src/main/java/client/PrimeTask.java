@@ -6,7 +6,7 @@ public class PrimeTask {
         System.out.println("Hello world!");
     }
 
-    public static int firstMethod() {
+    public int firstMethod() {
         return 18;
     }
 }
