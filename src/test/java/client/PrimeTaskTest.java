@@ -1,6 +1,5 @@
 package client;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
