@@ -1,9 +1,11 @@
 package client.gui;
 
 import javafx.application.Application;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class HomePage extends Application {
@@ -12,22 +14,31 @@ public class HomePage extends Application {
         launch(args);
     }
 
-    private Button exitButton;
+
 
     public void start(Stage stage) {
 
+        Button primeButton;
+        Button snakeButton;
 
-        exitButton = new Button();
-        exitButton.setText("Hello World!");
+        primeButton = new Button();
+        primeButton.setText("Primes");
+        primeButton.setPrefSize(100, 50);
+        primeButton.setFont(new Font(20));
 
-        exitButton.setOnAction((event -> {
-            stage.close();
-        }));
+        snakeButton = new Button();
+        snakeButton.setText("Snake");
+        snakeButton.setPrefSize(100, 50);
+        snakeButton.setFont(new Font(20));
 
-        StackPane layout = new StackPane();
-        layout.getChildren().add(exitButton);
 
-        Scene scene = new Scene(layout, 500, 300);
+        GridPane grid = new GridPane();
+        grid.add(primeButton, 0, 0);
+        grid.add(snakeButton, 1 ,0);
+        grid.setAlignment(Pos.CENTER);
+        grid.setHgap(40);
+
+        Scene scene = new Scene(grid, 500, 300);
 
         stage.setTitle("Homepage");
         stage.setScene(scene);
