@@ -27,7 +27,7 @@ public class PrimesPage {
 
         //Setting the button actions
         returnButton.setOnAction(event -> {
-            stage.close();
+            //stage.close();
             HomePage.show(stage);
         });
 
@@ -35,7 +35,7 @@ public class PrimesPage {
         GridPane grid = new GridPane();
         grid.add(calcButton, 0, 0);
         grid.setAlignment(Pos.CENTER);
-        grid.setPrefSize(500, 300);
+        grid.setPrefSize(600, 300);
 
         HBox hBox = new HBox();
         hBox.getChildren().addAll(returnButton);
@@ -51,6 +51,8 @@ public class PrimesPage {
 
         stage.setScene(scene);
         stage.setTitle("Primes");
+        stage.setMinHeight(Sizes.STAGE_HEIGHT);
+        stage.setMinWidth(Sizes.STAGE_WIDTH);
         stage.show();
     }
 }

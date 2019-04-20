@@ -36,7 +36,7 @@ public class HomePage extends Application {
 
         //Setting the button actions
         primeButton.setOnAction(event -> {
-            stage.close();
+            //stage.close();
             PrimesPage.show(stage);
         });
 
@@ -48,10 +48,12 @@ public class HomePage extends Application {
         grid.setHgap(40);
 
         //Setting scene and stage
-        Scene scene = new Scene(grid, 500, 300);
+        Scene scene = new Scene(grid, 400, 300);
 
         stage.setTitle("Homepage");
         stage.setScene(scene);
+        stage.setMinHeight(Sizes.STAGE_HEIGHT);
+        stage.setMinWidth(Sizes.STAGE_WIDTH);
         stage.show();
     }
 }
