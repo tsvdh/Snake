@@ -54,3 +54,8 @@ public class HomePage extends Application {
         stage.setScene(scene);
     }
 }
+
+/*  set size in scene
+    size will be biggest size of all scenes which will be calculated in Sizes
+    OR just set standard size
+ */
