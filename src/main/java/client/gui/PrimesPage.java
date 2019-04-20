@@ -1,9 +1,12 @@
 package client.gui;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -16,7 +19,12 @@ public class PrimesPage {
         calcButton.setPrefSize(150, 30);
         calcButton.setFont(new Font(20));
 
-        calcButton.setOnAction(event -> {
+        Button returnButton = new Button();
+        returnButton.setText("back");
+        returnButton.setPrefSize(50, 25);
+        returnButton.setFont(new Font(14));
+
+        returnButton.setOnAction(event -> {
             stage.close();
             HomePage.show(stage);
         });
@@ -24,8 +32,18 @@ public class PrimesPage {
         GridPane grid = new GridPane();
         grid.add(calcButton, 0, 0);
         grid.setAlignment(Pos.CENTER);
+        grid.setPrefSize(500, 300);
 
-        Scene scene = new Scene(grid, 800, 400);
+        HBox hBox = new HBox();
+        hBox.getChildren().addAll(returnButton);
+        hBox.setPadding(new Insets(5));
+        hBox.setAlignment(Pos.CENTER_LEFT);
+
+        BorderPane border = new BorderPane();
+        border.setCenter(grid);
+        border.setTop(hBox);
+
+        Scene scene = new Scene(border);
 
         stage.setScene(scene);
         stage.setTitle("Primes");
