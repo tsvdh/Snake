@@ -17,7 +17,11 @@ public class HomePage extends Application {
 
 
     public void start(Stage stage) {
+        show(stage);
 
+    }
+
+    public static void show(Stage stage) {
         Button primeButton;
         Button snakeButton;
 
@@ -31,6 +35,10 @@ public class HomePage extends Application {
         snakeButton.setPrefSize(100, 50);
         snakeButton.setFont(new Font(20));
 
+        primeButton.setOnAction(event -> {
+            stage.close();
+            PrimesPage.show(stage);
+        });
 
         GridPane grid = new GridPane();
         grid.add(primeButton, 0, 0);
