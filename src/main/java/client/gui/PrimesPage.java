@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 
 public class PrimesPage {
 
-    public static void show(Stage stage) {
+    public static void build(Stage stage) {
 
         //Making the buttons
         Button calcButton = new Button();
@@ -28,7 +28,7 @@ public class PrimesPage {
         //Setting the button actions
         returnButton.setOnAction(event -> {
             //stage.close();
-            HomePage.show(stage);
+            HomePage.build(stage);
         });
 
         //Making the layouts
@@ -51,8 +51,5 @@ public class PrimesPage {
 
         stage.setScene(scene);
         stage.setTitle("Primes");
-        stage.setMinHeight(Sizes.STAGE_HEIGHT);
-        stage.setMinWidth(Sizes.STAGE_WIDTH);
-        stage.show();
     }
 }

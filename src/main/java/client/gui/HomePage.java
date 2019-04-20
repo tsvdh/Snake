@@ -14,14 +14,14 @@ public class HomePage extends Application {
         launch(args);
     }
 
-
-
     public void start(Stage stage) {
-        show(stage);
-
+        build(stage);
+        stage.setMinHeight(Sizes.STAGE_HEIGHT);
+        stage.setMinWidth(Sizes.STAGE_WIDTH);
+        stage.show();
     }
 
-    public static void show(Stage stage) {
+    public static void build(Stage stage) {
 
         //Making the buttons
         Button primeButton = new Button();
@@ -37,7 +37,7 @@ public class HomePage extends Application {
         //Setting the button actions
         primeButton.setOnAction(event -> {
             //stage.close();
-            PrimesPage.show(stage);
+            PrimesPage.build(stage);
         });
 
         //Making the layouts
@@ -52,8 +52,5 @@ public class HomePage extends Application {
 
         stage.setTitle("Homepage");
         stage.setScene(scene);
-        stage.setMinHeight(Sizes.STAGE_HEIGHT);
-        stage.setMinWidth(Sizes.STAGE_WIDTH);
-        stage.show();
     }
 }
