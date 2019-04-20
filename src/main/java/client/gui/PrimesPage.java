@@ -14,6 +14,7 @@ public class PrimesPage {
 
     public static void show(Stage stage) {
 
+        //Making the buttons
         Button calcButton = new Button();
         calcButton.setText("Calculate");
         calcButton.setPrefSize(150, 30);
@@ -24,11 +25,13 @@ public class PrimesPage {
         returnButton.setPrefSize(50, 25);
         returnButton.setFont(new Font(14));
 
+        //Setting the button actions
         returnButton.setOnAction(event -> {
             stage.close();
             HomePage.show(stage);
         });
 
+        //Making the layouts
         GridPane grid = new GridPane();
         grid.add(calcButton, 0, 0);
         grid.setAlignment(Pos.CENTER);
@@ -43,6 +46,7 @@ public class PrimesPage {
         border.setCenter(grid);
         border.setTop(hBox);
 
+        //Setting scene and stage
         Scene scene = new Scene(border);
 
         stage.setScene(scene);

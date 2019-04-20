@@ -22,30 +22,32 @@ public class HomePage extends Application {
     }
 
     public static void show(Stage stage) {
-        Button primeButton;
-        Button snakeButton;
 
-        primeButton = new Button();
+        //Making the buttons
+        Button primeButton = new Button();
         primeButton.setText("Primes");
         primeButton.setPrefSize(100, 50);
         primeButton.setFont(new Font(20));
 
-        snakeButton = new Button();
+        Button snakeButton = new Button();
         snakeButton.setText("Snake");
         snakeButton.setPrefSize(100, 50);
         snakeButton.setFont(new Font(20));
 
+        //Setting the button actions
         primeButton.setOnAction(event -> {
             stage.close();
             PrimesPage.show(stage);
         });
 
+        //Making the layouts
         GridPane grid = new GridPane();
         grid.add(primeButton, 0, 0);
         grid.add(snakeButton, 1 ,0);
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(40);
 
+        //Setting scene and stage
         Scene scene = new Scene(grid, 500, 300);
 
         stage.setTitle("Homepage");
