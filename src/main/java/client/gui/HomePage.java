@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -15,13 +16,18 @@ public class HomePage extends Application {
     }
 
     public void start(Stage stage) {
-        build(stage);
+        set(stage, build(stage));
+
+        Sizes.list.add(HomePage.build(stage));
+        Sizes.list.add(PrimesPage.build(stage));
+        Sizes.setSizes();
+
         stage.setMinHeight(Sizes.STAGE_HEIGHT);
         stage.setMinWidth(Sizes.STAGE_WIDTH);
         stage.show();
     }
 
-    public static void build(Stage stage) {
+    public static Pane build(Stage stage) {
 
         //Making the buttons
         Button primeButton = new Button();
@@ -36,26 +42,25 @@ public class HomePage extends Application {
 
         //Setting the button actions
         primeButton.setOnAction(event -> {
-            //stage.close();
-            PrimesPage.build(stage);
+            PrimesPage.set(stage, PrimesPage.build(stage));
         });
 
         //Making the layouts
         GridPane grid = new GridPane();
         grid.add(primeButton, 0, 0);
-        grid.add(snakeButton, 1 ,0);
+        grid.add(snakeButton, 1, 0);
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(40);
 
+        return grid;
+    }
+
+    public static void set(Stage stage, Pane pane) {
+
         //Setting scene and stage
-        Scene scene = new Scene(grid, 400, 300);
+        Scene scene = new Scene(pane, Sizes.STAGE_WIDTH, Sizes.STAGE_HEIGHT);
 
         stage.setTitle("Homepage");
         stage.setScene(scene);
     }
 }
-
-/*  set size in scene
-    size will be biggest size of all scenes which will be calculated in Sizes
-    OR just set standard size
- */

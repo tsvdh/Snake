@@ -7,12 +7,13 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class PrimesPage {
 
-    public static void build(Stage stage) {
+    public static Pane build(Stage stage) {
 
         //Making the buttons
         Button calcButton = new Button();
@@ -27,8 +28,7 @@ public class PrimesPage {
 
         //Setting the button actions
         returnButton.setOnAction(event -> {
-            //stage.close();
-            HomePage.build(stage);
+            HomePage.set(stage, HomePage.build(stage));
         });
 
         //Making the layouts
@@ -46,10 +46,14 @@ public class PrimesPage {
         border.setCenter(grid);
         border.setTop(hBox);
 
-        //Setting scene and stage
-        Scene scene = new Scene(border);
+        return border;
+    }
 
-        stage.setScene(scene);
+    public static void set(Stage stage, Pane pane) {
+        //Setting scene and stage
+        Scene scene = new Scene(pane, Sizes.STAGE_WIDTH, Sizes.STAGE_HEIGHT);
+
         stage.setTitle("Primes");
+        stage.setScene(scene);
     }
 }
