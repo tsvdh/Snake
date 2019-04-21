@@ -27,7 +27,7 @@ public class HomePage extends Application {
         stage.show();
     }
 
-    public static Pane build(Stage stage) {
+    public static Scene build(Stage stage) {
 
         //Making the buttons
         Button primeButton = new Button();
@@ -52,14 +52,12 @@ public class HomePage extends Application {
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(40);
 
-        return grid;
+        return new Scene(grid);
     }
 
-    public static void set(Stage stage, Pane pane) {
+    public static void set(Stage stage, Scene scene) {
 
-        //Setting scene and stage
-        Scene scene = new Scene(pane, Sizes.STAGE_WIDTH, Sizes.STAGE_HEIGHT);
-
+        //Setting stage
         stage.setTitle("Homepage");
         stage.setScene(scene);
     }

@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 public class PrimesPage {
 
-    public static Pane build(Stage stage) {
+    public static Scene build(Stage stage) {
 
         //Making the buttons
         Button calcButton = new Button();
@@ -46,13 +46,12 @@ public class PrimesPage {
         border.setCenter(grid);
         border.setTop(hBox);
 
-        return border;
+        return new Scene(border);
     }
 
-    public static void set(Stage stage, Pane pane) {
-        //Setting scene and stage
-        Scene scene = new Scene(pane, Sizes.STAGE_WIDTH, Sizes.STAGE_HEIGHT);
+    public static void set(Stage stage, Scene scene) {
 
+        //Setting stage
         stage.setTitle("Primes");
         stage.setScene(scene);
     }
