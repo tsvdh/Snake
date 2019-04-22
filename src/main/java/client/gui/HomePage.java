@@ -12,10 +12,15 @@ import javafx.stage.Stage;
 
 public class HomePage extends Application {
 
+    /**
+     * Starts the program.
+     * @param args should be empty.
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    @Override
     public void start(Stage stage) {
 
         Sizes.list.add(HomePage.build(stage));
@@ -30,7 +35,7 @@ public class HomePage extends Application {
         stage.show();
     }
 
-    public static Pane build(Stage stage) {
+    static Pane build(Stage stage) {
 
         //Making the buttons
         Button primeButton = new Button();
@@ -60,7 +65,7 @@ public class HomePage extends Application {
         return grid;
     }
 
-    public static void set(Stage stage, Pane pane) {
+    static void set(Stage stage, Pane pane) {
 
         //Setting scene and stage
         stage.setTitle("Homepage");

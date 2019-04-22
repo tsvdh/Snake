@@ -6,14 +6,15 @@ import javafx.stage.Stage;
 
 import java.util.LinkedList;
 
-public class Sizes {
+class Sizes {
 
-    public static double STAGE_HEIGHT = Integer.MIN_VALUE;
-    public static double STAGE_WIDTH = Integer.MIN_VALUE;
+    static double STAGE_HEIGHT = Integer.MIN_VALUE;
+    static double STAGE_WIDTH = Integer.MIN_VALUE;
 
-    public static LinkedList<Pane> list = new LinkedList<>();
+    static LinkedList<Pane> list = new LinkedList<>();
 
-    public static void setSizes() {
+
+    static void setSizes() {
         for (Pane pane: list) {
 
             Scene scene = new Scene(pane);
@@ -24,7 +25,7 @@ public class Sizes {
             double height = stage.getHeight();
             double width = stage.getWidth();
 
-            if (height> STAGE_HEIGHT) {
+            if (height > STAGE_HEIGHT) {
                 STAGE_HEIGHT = height;
             }
             if (width > STAGE_WIDTH) {

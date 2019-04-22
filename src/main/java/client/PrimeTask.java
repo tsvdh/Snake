@@ -54,7 +54,6 @@ public class PrimeTask extends Task<ArrayList<Long>> {
         }
         for (long i = 2; i < number; i++) {
             if (number % i == 0) {
-                System.out.println(i);
                 return false;
             }
         }

@@ -14,9 +14,9 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class PrimesPage {
+class PrimesPage {
 
-    public static Pane build(Stage stage) {
+    static Pane build(Stage stage) {
 
         //Making the buttons
         Button calcButton = new Button();
@@ -80,7 +80,7 @@ public class PrimesPage {
         return border;
     }
 
-    public static void set(Stage stage, Pane pane) {
+    static void set(Stage stage, Pane pane) {
 
         //Setting scene and stage
         stage.setTitle("Primes");
