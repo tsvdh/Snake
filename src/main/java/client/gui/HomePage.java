@@ -16,7 +16,7 @@ public class HomePage extends Application {
     }
 
     public void start(Stage stage) {
-        set(stage, build(stage));
+
 
         Sizes.list.add(HomePage.build(stage));
         Sizes.list.add(PrimesPage.build(stage));
@@ -24,10 +24,13 @@ public class HomePage extends Application {
 
         stage.setMinHeight(Sizes.STAGE_HEIGHT);
         stage.setMinWidth(Sizes.STAGE_WIDTH);
+
+        set(stage, build(stage));
+
         stage.show();
     }
 
-    public static Scene build(Stage stage) {
+    public static Pane build(Stage stage) {
 
         //Making the buttons
         Button primeButton = new Button();
@@ -52,13 +55,14 @@ public class HomePage extends Application {
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(40);
 
-        return new Scene(grid);
+        return grid;
     }
 
-    public static void set(Stage stage, Scene scene) {
+    public static void set(Stage stage, Pane pane) {
 
         //Setting stage
         stage.setTitle("Homepage");
-        stage.setScene(scene);
+        stage.setScene(new Scene(pane));
+
     }
 }
