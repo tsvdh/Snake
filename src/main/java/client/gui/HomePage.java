@@ -1,6 +1,7 @@
 package client.gui;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -53,6 +54,8 @@ public class HomePage extends Application {
         primeButton.setOnAction(event -> {
             PrimesPage.set(stage, PrimesPage.build(stage));
         });
+
+        Platform.runLater(grid :: requestFocus);
 
         return grid;
     }
