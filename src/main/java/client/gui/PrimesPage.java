@@ -51,8 +51,9 @@ public class PrimesPage {
 
     public static void set(Stage stage, Pane pane) {
 
-        //Setting stage
+        //Setting scene and stage
         stage.setTitle("Primes");
-        stage.setScene(new Scene(pane));
+        Scene scene = new Scene(pane, Sizes.STAGE_WIDTH, Sizes.STAGE_HEIGHT);
+        stage.setScene(scene);
     }
 }

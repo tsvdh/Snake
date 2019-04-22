@@ -17,13 +17,12 @@ public class HomePage extends Application {
 
     public void start(Stage stage) {
 
-
         Sizes.list.add(HomePage.build(stage));
         Sizes.list.add(PrimesPage.build(stage));
         Sizes.setSizes();
 
-        stage.setMinHeight(Sizes.STAGE_HEIGHT);
-        stage.setMinWidth(Sizes.STAGE_WIDTH);
+        stage.setHeight(Sizes.STAGE_HEIGHT);
+        stage.setWidth(Sizes.STAGE_WIDTH);
 
         set(stage, build(stage));
 
@@ -60,9 +59,9 @@ public class HomePage extends Application {
 
     public static void set(Stage stage, Pane pane) {
 
-        //Setting stage
+        //Setting scene and stage
         stage.setTitle("Homepage");
-        stage.setScene(new Scene(pane));
-
+        Scene scene = new Scene(pane, Sizes.STAGE_WIDTH, Sizes.STAGE_HEIGHT);
+        stage.setScene(scene);
     }
 }
