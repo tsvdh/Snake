@@ -42,17 +42,17 @@ public class HomePage extends Application {
         snakeButton.setPrefSize(100, 50);
         snakeButton.setFont(new Font(20));
 
-        //Setting the button actions
-        primeButton.setOnAction(event -> {
-            PrimesPage.set(stage, PrimesPage.build(stage));
-        });
-
         //Making the layouts
         GridPane grid = new GridPane();
         grid.add(primeButton, 0, 0);
         grid.add(snakeButton, 1, 0);
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(40);
+
+        //Setting the button actions
+        primeButton.setOnAction(event -> {
+            PrimesPage.set(stage, PrimesPage.build(stage));
+        });
 
         return grid;
     }
