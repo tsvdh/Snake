@@ -2,6 +2,8 @@ package client;
 
 import javafx.concurrent.Task;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class PrimeTask extends Task<ArrayList<Long>> {
@@ -46,11 +48,9 @@ public class PrimeTask extends Task<ArrayList<Long>> {
 
                 Double progress = (counter / length) * 100;
 
-                String string = progress.toString();
-                int pos = string.indexOf('.') + 2;
-                string = string.substring(0, pos);
-
-                progress = new Double(string);
+                DecimalFormat decimalFormat = new DecimalFormat("#.#");
+                decimalFormat.setRoundingMode(RoundingMode.CEILING);
+                progress = new Double(decimalFormat.format(progress));
 
                 try {
                     updateMessage(progress + "%");

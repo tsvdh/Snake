@@ -15,6 +15,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -56,11 +58,12 @@ class PrimesPage {
         inputHBox.setSpacing(5);
         inputHBox.setAlignment(Pos.CENTER);
 
-        HBox resultHBox = new HBox();
         Label result = new Label();
         result.setMinHeight(100);
         result.setPadding(new Insets(20));
         result.setFont(new Font(14));
+
+        HBox resultHBox = new HBox();
         resultHBox.getChildren().addAll(result,
                                         stopButton);
         resultHBox.setAlignment(Pos.CENTER);
@@ -103,16 +106,21 @@ class PrimesPage {
                     calcButton.setDisable(true);
                     stopButton.setVisible(true);
 
-                    ExecutorService executorService = Executors.newFixedThreadPool(1);
                     PrimeTask task = new PrimeTask(number1, number2);
-
 
                     result.textProperty().bind(task.messageProperty());
 
+                    double total = number2 - number1 + 1;
                     task.setOnSucceeded(succeededEvent -> {
                         stopButton.setVisible(false);
                         result.textProperty().unbind();
-                        result.setText(task.getValue().toString());
+
+                        DecimalFormat decimalFormat = new DecimalFormat("#.####");
+                        decimalFormat.setRoundingMode(RoundingMode.CEILING);
+                        double percentage = task.getValue().size() / total * 100;
+                        percentage = new Double(decimalFormat.format(percentage));
+
+                        result.setText(percentage + "%" + " are primes.");
                         calcButton.setDisable(false);
                     });
 
@@ -129,9 +137,11 @@ class PrimesPage {
                         calcButton.setDisable(false);
                     });
 
+                    ExecutorService executorService = Executors.newSingleThreadExecutor();
                     executorService.execute(task);
                 } else {
-                    result.setText("The first number must be greater or equal then the second number.");
+                    result.setText("The first number must be "
+                            + "greater or equal than the second number.");
                 }
             } else {
                 result.setText("Please enter numbers.");

@@ -4,6 +4,8 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static org.junit.Assert.*;
 
@@ -35,10 +37,24 @@ public class PrimeTaskTest {
     }
 
     @Test
-    public void call() {
+    public void call1() {
         ArrayList<Long> list = new ArrayList<>();
         list.add(11L);
         list.add(13L);
         assertEquals(list, new PrimeTask(10L, 13L).call());
+    }
+
+    @Test
+    public void call2() {
+        PrimeTask task = new PrimeTask(1L, 1000000000L);
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+        task.setOnRunning(event -> {
+            task.cancel(true);
+        });
+
+        executorService.execute(task);
+
+        assertTrue(task.isCancelled());
     }
 }
