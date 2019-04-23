@@ -37,15 +37,20 @@ public class PrimeTask extends Task<ArrayList<Long>> {
         long length = to - from + 1;
         long counter = 0;
         for (long i = from; i <= to; i++) {
-            if (isPrime(i)) {
-                list.add(i);
-            }
-            counter++;
-            Long progress = (counter / length) * 100;
-            try {
-                updateMessage(progress + "%");
-            } catch (IllegalStateException e) {
-                System.out.println(e.getMessage());
+            if (!isCancelled()) {
+                if (isPrime(i)) {
+                    list.add(i);
+                }
+                counter++;
+                System.out.println(counter + " " + length);
+                Long progress = (counter / length) * 100;
+                try {
+                    updateMessage(progress + "%");
+                } catch (IllegalStateException e) {
+                    System.out.println(e.getMessage());
+                }
+            } else {
+                return null;
             }
         }
         return list;

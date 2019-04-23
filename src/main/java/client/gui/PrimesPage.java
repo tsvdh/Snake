@@ -92,16 +92,26 @@ class PrimesPage {
             }
             if (valid) {
                 if (number1 <= number2) {
+                    border.requestFocus();
                     calcButton.setDisable(true);
-                    ExecutorService executorService = Executors.newSingleThreadExecutor();
+                    ExecutorService executorService = Executors.newFixedThreadPool(1);
                     PrimeTask task = new PrimeTask(number1, number2);
 
                     result.textProperty().bind(task.messageProperty());
 
                     task.setOnSucceeded(succeededEvent -> {
                         result.textProperty().unbind();
-                        result.setText(task.getValue().toString());
+                        if (task.getValue() == null) {
+                            result.setText("Cancelled.");
+                        } else {
+                            result.setText(task.getValue().toString());
+                        }
                         calcButton.setDisable(false);
+                    });
+
+                    returnButton.setOnAction(returnAction -> {
+                        task.cancel(true);
+                        HomePage.set(stage, HomePage.build(stage));
                     });
 
                     executorService.execute(task);
