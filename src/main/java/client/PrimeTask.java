@@ -22,6 +22,7 @@ public class PrimeTask extends Task<ArrayList<Long>> {
 
     @Override
     protected ArrayList<Long> call() {
+
         return primesInRange(from, to);
     }
 
@@ -35,15 +36,22 @@ public class PrimeTask extends Task<ArrayList<Long>> {
     ArrayList<Long> primesInRange(long from, long to) {
         ArrayList<Long> list = new ArrayList<>();
         long length = to - from + 1;
-        long counter = 0;
+        double counter = 0;
         for (long i = from; i <= to; i++) {
             if (!isCancelled()) {
                 if (isPrime(i)) {
                     list.add(i);
                 }
                 counter++;
-                System.out.println(counter + " " + length);
-                Long progress = (counter / length) * 100;
+
+                Double progress = (counter / length) * 100;
+
+                String string = progress.toString();
+                int pos = string.indexOf('.') + 2;
+                string = string.substring(0, pos);
+
+                progress = new Double(string);
+
                 try {
                     updateMessage(progress + "%");
                 } catch (IllegalStateException e) {

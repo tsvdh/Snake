@@ -115,7 +115,6 @@ class PrimesPage {
                     });
 
                     executorService.execute(task);
-                    executorService.shutdown();
                 } else {
                     result.setText("The first number must be greater or equal then the second number.");
                 }
