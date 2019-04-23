@@ -33,6 +33,12 @@ class PrimesPage {
         returnButton.setPrefSize(50, 25);
         returnButton.setFont(new Font(14));
 
+        Button stopButton = new Button();
+        stopButton.setText("Stop");
+        stopButton.setPrefSize(60, 30);
+        stopButton.setFont(new Font(15));
+        stopButton.setVisible(false);
+
         //Making the layouts
         HBox inputHBox = new HBox();
         Text text1 = new Text("Calculate primes from");
@@ -55,7 +61,8 @@ class PrimesPage {
         result.setMinHeight(100);
         result.setPadding(new Insets(20));
         result.setFont(new Font(14));
-        resultHBox.getChildren().add(result);
+        resultHBox.getChildren().addAll(result,
+                                        stopButton);
         resultHBox.setAlignment(Pos.CENTER);
 
         VBox centerVBox = new VBox();
@@ -94,24 +101,32 @@ class PrimesPage {
                 if (number1 <= number2) {
                     border.requestFocus();
                     calcButton.setDisable(true);
+                    stopButton.setVisible(true);
+
                     ExecutorService executorService = Executors.newFixedThreadPool(1);
                     PrimeTask task = new PrimeTask(number1, number2);
+
 
                     result.textProperty().bind(task.messageProperty());
 
                     task.setOnSucceeded(succeededEvent -> {
+                        stopButton.setVisible(false);
                         result.textProperty().unbind();
-                        if (task.getValue() == null) {
-                            result.setText("Cancelled.");
-                        } else {
-                            result.setText(task.getValue().toString());
-                        }
+                        result.setText(task.getValue().toString());
                         calcButton.setDisable(false);
                     });
 
                     returnButton.setOnAction(returnAction -> {
                         task.cancel(true);
                         HomePage.set(stage, HomePage.build(stage));
+                    });
+
+                    stopButton.setOnAction(stopAction -> {
+                        task.cancel(true);
+                        stopButton.setVisible(false);
+                        result.textProperty().unbind();
+                        result.setText("Stopped");
+                        calcButton.setDisable(false);
                     });
 
                     executorService.execute(task);

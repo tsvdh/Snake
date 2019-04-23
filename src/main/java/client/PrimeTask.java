@@ -57,8 +57,6 @@ public class PrimeTask extends Task<ArrayList<Long>> {
                 } catch (IllegalStateException e) {
                     System.out.println(e.getMessage());
                 }
-            } else {
-                return null;
             }
         }
         return list;
