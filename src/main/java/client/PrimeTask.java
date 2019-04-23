@@ -32,11 +32,20 @@ public class PrimeTask extends Task<ArrayList<Long>> {
      * @param to Where to end looking for primes.
      * @return An ArrayList with all the primes in the given range.
      */
-    public static ArrayList<Long> primesInRange(long from, long to) {
+    ArrayList<Long> primesInRange(long from, long to) {
         ArrayList<Long> list = new ArrayList<>();
+        long length = to - from + 1;
+        long counter = 0;
         for (long i = from; i <= to; i++) {
             if (isPrime(i)) {
                 list.add(i);
+            }
+            counter++;
+            Long progress = (counter / length) * 100;
+            try {
+                updateMessage(progress + "%");
+            } catch (IllegalStateException e) {
+                System.out.println(e.getMessage());
             }
         }
         return list;
@@ -48,7 +57,7 @@ public class PrimeTask extends Task<ArrayList<Long>> {
      * @param number The number to check.
      * @return A boolean indicating the result of the check.
      */
-    public static boolean isPrime(long number) {
+    boolean isPrime(long number) {
         if (number < 3) {
             return false;
         }

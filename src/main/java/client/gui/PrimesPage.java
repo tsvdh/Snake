@@ -1,5 +1,6 @@
 package client.gui;
 
+import client.PrimeTask;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -13,6 +14,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 class PrimesPage {
 
@@ -50,6 +54,7 @@ class PrimesPage {
         Label result = new Label();
         result.setMinHeight(100);
         result.setPadding(new Insets(20));
+        result.setFont(new Font(14));
         resultHBox.getChildren().add(result);
         resultHBox.setAlignment(Pos.CENTER);
 
@@ -74,7 +79,39 @@ class PrimesPage {
         });
 
         calcButton.setOnAction(event -> {
-            result.setText(textField1.getText().trim() + " " + textField2.getText().trim());
+            boolean valid = true;
+            String string1 = textField1.getText().trim();
+            String string2 = textField2.getText().trim();
+            Long number1 = 0L;
+            Long number2 = -1L;
+            try {
+                number1 = new Long(string1);
+                number2 = new Long(string2);
+            } catch (NumberFormatException e) {
+                valid = false;
+            }
+            if (valid) {
+                if (number1 <= number2) {
+                    calcButton.setDisable(true);
+                    ExecutorService executorService = Executors.newSingleThreadExecutor();
+                    PrimeTask task = new PrimeTask(number1, number2);
+
+                    result.textProperty().bind(task.messageProperty());
+
+                    task.setOnSucceeded(succeededEvent -> {
+                        result.textProperty().unbind();
+                        result.setText(task.getValue().toString());
+                        calcButton.setDisable(false);
+                    });
+
+                    executorService.execute(task);
+                    executorService.shutdown();
+                } else {
+                    result.setText("The first number must be greater or equal then the second number.");
+                }
+            } else {
+                result.setText("Please enter numbers.");
+            }
         });
 
         return border;
