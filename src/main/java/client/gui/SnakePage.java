@@ -12,9 +12,12 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.LinkedList;
+
 class SnakePage {
 
-    private static SnakeButton[][] gridArray = new SnakeButton[20][20];
+    private static GridElement[][] gridArray = new GridElement[20][20];
+    private static LinkedList<GridElement> snakeList = new LinkedList<>();
 
     static Pane build(Stage stage) {
 
@@ -23,9 +26,21 @@ class SnakePage {
         returnButton.setText("back");
         returnButton.setFont(new Font(14));
 
-        SnakeButton grid1 = new SnakeButton();
-        SnakeButton grid2 = new SnakeButton();
-        grid1.setApple();
+        Button upButton = new Button();
+        upButton.setPrefSize(50, 50);
+        upButton.setStyle("-fx-background-image: url('/images/icons8-up-filled-50.png')");
+
+        Button downButton = new Button();
+        downButton.setPrefSize(50, 50);
+        downButton.setStyle("-fx-background-image: url('/images/icons8-down-filled-50.png');");
+
+        Button leftButton = new Button();
+        leftButton.setPrefSize(50, 50);
+        leftButton.setStyle("-fx-background-image: url('/images/icons8-left-filled-50.png')");
+
+        Button rightButton = new Button();
+        rightButton.setPrefSize(50, 50);
+        rightButton.setStyle("-fx-background-image: url('/images/icons8-right-filled-50.png')");
 
         //Making the layouts
         HBox topHBox = new HBox();
@@ -42,31 +57,18 @@ class SnakePage {
         gridArray[3][2].setSnake();
         gridArray[3][3].setSnake();
         gridArray[4][3].setHead();
+        snakeList.addLast(gridArray[4][3]);
+        snakeList.addLast(gridArray[3][3]);
+        snakeList.addLast(gridArray[3][2]);
+        snakeList.addLast(gridArray[3][1]);
 
         GridPane buttons = new GridPane();
         buttons.setAlignment(Pos.CENTER);
         buttons.setPadding(new Insets(0, 0, 0 , 50));
-
-        Button upButton = new Button();
-        upButton.setPrefSize(50, 50);
-        upButton.setStyle("-fx-background-image: url('/images/icons8-up-filled-50.png')");
         buttons.add(upButton, 1, 0);
-
-        Button downButton = new Button();
-        downButton.setPrefSize(50, 50);
-        downButton.setStyle("-fx-background-image: url('/images/icons8-down-filled-50.png');");
         buttons.add(downButton, 1, 2);
-
-        Button leftButton = new Button();
-        leftButton.setPrefSize(50, 50);
-        leftButton.setStyle("-fx-background-image: url('/images/icons8-left-filled-50.png')");
         buttons.add(leftButton, 0, 1);
-
-        Button rightButton = new Button();
-        rightButton.setPrefSize(50, 50);
-        rightButton.setStyle("-fx-background-image: url('/images/icons8-right-filled-50.png')");
         buttons.add(rightButton, 2, 1);
-
 
         BorderPane border = new BorderPane();
         border.setCenter(grid);
@@ -75,8 +77,17 @@ class SnakePage {
 
         //Setting the button actions
         returnButton.setOnAction(event -> {
+            snakeList.clear();
             HomePage.set(stage, HomePage.build(stage));
         });
+
+        upButton.setOnAction(event -> move("up"));
+
+        downButton.setOnAction(event -> move("down"));
+
+        leftButton.setOnAction(event -> move("left"));
+
+        rightButton.setOnAction(event -> move("right"));
 
         Platform.runLater(grid :: requestFocus);
 
@@ -86,7 +97,7 @@ class SnakePage {
     private static void buildGrid(GridPane grid) {
         for (int y = 0; y < 20; y++) {
             for (int x = 0; x < 20; x++) {
-                gridArray[y][x] = new SnakeButton();
+                gridArray[y][x] = new GridElement(x, y);
                 gridArray[y][x].setEmpty();
                 grid.add(gridArray[y][x], x, y);
             }
@@ -99,5 +110,34 @@ class SnakePage {
         stage.setTitle("Snake");
         Scene scene = new Scene(pane, Sizes.STAGE_WIDTH, Sizes.STAGE_HEIGHT);
         stage.setScene(scene);
+    }
+
+    private static void move(String direction) {
+        int x = snakeList.getFirst().X;
+        int y = snakeList.getFirst().Y;
+
+        switch (direction) {
+            case "up":
+                y--;
+                break;
+            case "down":
+                y++;
+                break;
+            case "left":
+                x--;
+                break;
+            case "right":
+                x++;
+                break;
+            default:
+                break;
+        }
+
+        snakeList.getFirst().setSnake();
+        gridArray[y][x].setHead();
+        snakeList.addFirst(gridArray[y][x]);
+
+        snakeList.getLast().setEmpty();
+        snakeList.removeLast();
     }
 }

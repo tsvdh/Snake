@@ -2,13 +2,17 @@ package client.gui;
 
 import javafx.scene.control.Button;
 
-class SnakeButton extends Button {
+class GridElement extends Button {
 
     String STATUS;
+    int X;
+    int Y;
 
-    SnakeButton() {
+    GridElement(int x, int y) {
         super();
         this.setMinSize(30, 30);
+        this.X = x;
+        this.Y = y;
     }
 
     void setEmpty() {
