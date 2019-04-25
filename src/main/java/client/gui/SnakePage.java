@@ -13,7 +13,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.LinkedList;
-import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -121,7 +120,7 @@ class SnakePage {
 
         //Starting the game
         ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new UpdateTask(), 0, 500, TimeUnit.MILLISECONDS);
+        scheduler.scheduleAtFixedRate(new UpdateThread(), 0, 400, TimeUnit.MILLISECONDS);
     }
 
     static void move() {
