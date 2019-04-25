@@ -135,23 +135,32 @@ class SnakePage {
             default:
                 break;
         }
-
-        switch (gridArray[y][x].STATUS) {
-            case "apple":
-                snakeList.getFirst().setSnake();
-                gridArray[y][x].setHead();
-                snakeList.addFirst(gridArray[y][x]);
-                break;
-            default:
-                snakeList.getFirst().setSnake();
-                gridArray[y][x].setHead();
-                snakeList.addFirst(gridArray[y][x]);
-
-                snakeList.getLast().setEmpty();
-                snakeList.removeLast();
-                break;
+        try {
+            switch (gridArray[y][x].STATUS) {
+                case "apple":
+                    addHead(x, y);
+                    break;
+                case "snake":
+                    throw new Exception();
+                default:
+                    addHead(x, y);
+                    removeTail();
+                    break;
+            }
+        } catch (Exception e) {
+            System.exit(0);
         }
 
+    }
 
+    private static void addHead(int x, int y) {
+        snakeList.getFirst().setSnake();
+        gridArray[y][x].setHead();
+        snakeList.addFirst(gridArray[y][x]);
+    }
+
+    private static void removeTail() {
+        snakeList.getLast().setEmpty();
+        snakeList.removeLast();
     }
 }
