@@ -35,8 +35,13 @@ class SnakePage {
 
         GridPane grid = new GridPane();
         buildGrid(grid);
-        grid.setPrefSize(grid.getWidth() + 50, grid.getHeight() + 50);
+        grid.setPadding(new Insets(50));
         grid.setAlignment(Pos.CENTER);
+        gridArray[15][10].setApple();
+        gridArray[3][1].setSnake();
+        gridArray[3][2].setSnake();
+        gridArray[3][3].setSnake();
+        gridArray[4][3].setHead();
 
         GridPane buttons = new GridPane();
 
@@ -59,6 +64,7 @@ class SnakePage {
         for (int y = 0; y < 20; y++) {
             for (int x = 0; x < 20; x++) {
                 gridArray[y][x] = new SnakeButton();
+                gridArray[y][x].setEmpty();
                 grid.add(gridArray[y][x], x, y);
             }
         }

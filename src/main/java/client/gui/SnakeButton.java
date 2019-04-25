@@ -9,14 +9,13 @@ class SnakeButton extends Button {
     SnakeButton() {
         super();
         this.setMinSize(30, 30);
-        this.setEmpty();
     }
 
     void setEmpty() {
         this.STATUS = "empty";
         this.setStyle("-fx-background-color: lightgrey;"
                 + "-fx-border-style: solid;"
-                + "-fx-border-width: 1px;"
+                + "-fx-border-width: 0.5px;"
                 + "-fx-border-color: black;"
                 + "-fx-border-radius: 0px");
     }
@@ -25,7 +24,7 @@ class SnakeButton extends Button {
         this.STATUS = "snake";
         this.setStyle("-fx-background-color: green;"
                 + "-fx-border-style: solid;"
-                + "-fx-border-width: 1px;"
+                + "-fx-border-width: 0.5px;"
                 + "-fx-border-color: black;"
                 + "-fx-border-radius: 0px");
     }
@@ -34,7 +33,16 @@ class SnakeButton extends Button {
         this.STATUS = "apple";
         this.setStyle("-fx-background-color: red;"
                 + "-fx-border-style: solid;"
-                + "-fx-border-width: 1px;"
+                + "-fx-border-width: 0.5px;"
+                + "-fx-border-color: black;"
+                + "-fx-border-radius: 0px");
+    }
+
+    void setHead() {
+        this.STATUS = "head";
+        this.setStyle("-fx-background-color: green;"
+                + "-fx-border-style: solid;"
+                + "-fx-border-width: 0.5px;"
                 + "-fx-border-color: black;"
                 + "-fx-border-radius: 0px");
     }
