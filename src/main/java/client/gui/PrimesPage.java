@@ -44,11 +44,13 @@ class PrimesPage {
         //Making the layouts
         HBox inputHBox = new HBox();
         Text text1 = new Text("Calculate primes from");
-        text1.setFont(new Font(15));
+        text1.setFont(new Font(17));
         Text text2 = new Text("to");
-        text2.setFont(new Font(15));
+        text2.setFont(new Font(17));
         TextField textField1 = new TextField();
+        textField1.setFont(new Font(17));
         TextField textField2 = new TextField();
+        textField2.setFont(new Font(17));
         inputHBox.getChildren().addAll( text1,
                                         textField1,
                                         text2,
@@ -61,7 +63,7 @@ class PrimesPage {
         Label result = new Label();
         result.setMinHeight(100);
         result.setPadding(new Insets(20));
-        result.setFont(new Font(14));
+        result.setFont(new Font(17));
 
         HBox resultHBox = new HBox();
         resultHBox.getChildren().addAll(result,
