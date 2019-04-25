@@ -44,6 +44,29 @@ class SnakePage {
         gridArray[4][3].setHead();
 
         GridPane buttons = new GridPane();
+        buttons.setAlignment(Pos.CENTER);
+        buttons.setPadding(new Insets(0, 0, 0 , 10));
+
+        Button upButton = new Button();
+        upButton.setPrefSize(50, 50);
+        upButton.setStyle("-fx-background-image: url('/images/icons8-up-filled-50.png')");
+        buttons.add(upButton, 1, 0);
+
+        Button downButton = new Button();
+        downButton.setPrefSize(50, 50);
+        downButton.setStyle("-fx-background-image: url('/images/icons8-down-filled-50.png');");
+        buttons.add(downButton, 1, 2);
+
+        Button leftButton = new Button();
+        leftButton.setPrefSize(50, 50);
+        leftButton.setStyle("-fx-background-image: url('/images/icons8-left-filled-50.png')");
+        buttons.add(leftButton, 0, 1);
+
+        Button rightButton = new Button();
+        rightButton.setPrefSize(50, 50);
+        rightButton.setStyle("-fx-background-image: url('/images/icons8-right-filled-50.png')");
+        buttons.add(rightButton, 2, 1);
+
 
         BorderPane border = new BorderPane();
         border.setCenter(grid);
