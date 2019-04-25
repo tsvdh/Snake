@@ -45,7 +45,7 @@ class SnakePage {
 
         GridPane buttons = new GridPane();
         buttons.setAlignment(Pos.CENTER);
-        buttons.setPadding(new Insets(0, 0, 0 , 10));
+        buttons.setPadding(new Insets(0, 0, 0 , 50));
 
         Button upButton = new Button();
         upButton.setPrefSize(50, 50);
