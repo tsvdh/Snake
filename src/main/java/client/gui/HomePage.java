@@ -25,6 +25,7 @@ public class HomePage extends Application {
 
         Sizes.list.add(HomePage.build(stage));
         Sizes.list.add(PrimesPage.build(stage));
+        Sizes.list.add(SnakePage.build(stage));
         Sizes.setSizes();
 
         stage.setHeight(Sizes.STAGE_HEIGHT);
@@ -54,10 +55,15 @@ public class HomePage extends Application {
         grid.add(snakeButton, 1, 0);
         grid.setAlignment(Pos.CENTER);
         grid.setHgap(40);
+        grid.setMinSize(300, 100);
 
         //Setting the button actions
         primeButton.setOnAction(event -> {
             PrimesPage.set(stage, PrimesPage.build(stage));
+        });
+
+        snakeButton.setOnAction(event -> {
+            SnakePage.set(stage, SnakePage.build(stage));
         });
 
         Platform.runLater(grid :: requestFocus);
