@@ -13,11 +13,16 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.LinkedList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 class SnakePage {
 
     private static GridElement[][] gridArray = new GridElement[20][20];
     private static LinkedList<GridElement> snakeList = new LinkedList<>();
+    private static String direction = "none";
 
     static Pane build(Stage stage) {
 
@@ -83,13 +88,13 @@ class SnakePage {
             HomePage.set(stage, HomePage.build(stage));
         });
 
-        upButton.setOnAction(event -> move("up"));
+        upButton.setOnAction(event -> direction = "up");
 
-        downButton.setOnAction(event -> move("down"));
+        downButton.setOnAction(event -> direction = "down");
 
-        leftButton.setOnAction(event -> move("left"));
+        leftButton.setOnAction(event -> direction = "left");
 
-        rightButton.setOnAction(event -> move("right"));
+        rightButton.setOnAction(event -> direction = "right");
 
         Platform.runLater(grid :: requestFocus);
 
@@ -113,9 +118,13 @@ class SnakePage {
         stage.setTitle("Snake");
         Scene scene = new Scene(pane, Sizes.STAGE_WIDTH, Sizes.STAGE_HEIGHT);
         stage.setScene(scene);
+
+        //Starting the game
+        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleAtFixedRate(new UpdateTask(), 0, 500, TimeUnit.MILLISECONDS);
     }
 
-    private static void move(String direction) {
+    static void move() {
         int x = snakeList.getFirst().X;
         int y = snakeList.getFirst().Y;
 
@@ -142,9 +151,11 @@ class SnakePage {
                     break;
                 case "snake":
                     throw new Exception();
-                default:
+                case "empty":
                     addHead(x, y);
                     removeTail();
+                    break;
+                default:
                     break;
             }
         } catch (Exception e) {
