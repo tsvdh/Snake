@@ -23,6 +23,7 @@ class SnakePage {
     private static GridElement[][] gridArray = new GridElement[20][20];
     private static LinkedList<GridElement> snakeList = new LinkedList<>();
     private static String direction = "none";
+    private static ScheduledExecutorService scheduler;
 
     static Pane build(Stage stage) {
 
@@ -57,12 +58,6 @@ class SnakePage {
         buildGrid(grid);
         grid.setPadding(new Insets(50));
         grid.setAlignment(Pos.CENTER);
-        //set up example
-        for (int i = 0; i < 10; i++) {
-            spawnApple();
-        }
-        gridArray[4][3].setHead();
-        snakeList.addLast(gridArray[4][3]);
 
         GridPane buttons = new GridPane();
         buttons.setAlignment(Pos.CENTER);
@@ -79,6 +74,7 @@ class SnakePage {
 
         //Setting the button actions
         returnButton.setOnAction(event -> {
+            scheduler.shutdown();
             HomePage.set(stage, HomePage.build(stage));
         });
 
@@ -115,8 +111,15 @@ class SnakePage {
         stage.setScene(scene);
 
         //Starting the game
-        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new UpdateThread(), 0, 400, TimeUnit.MILLISECONDS);
+        Random randomGenerator = new Random();
+        int x = randomGenerator.nextInt(20);
+        int y = randomGenerator.nextInt(20);
+        gridArray[y][x].setHead();
+        snakeList.addFirst(gridArray[y][x]);
+        spawnApple();
+
+        scheduler = Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleAtFixedRate(new UpdateThread(), 0, 250, TimeUnit.MILLISECONDS);
     }
 
     static void move() {
@@ -143,6 +146,7 @@ class SnakePage {
             switch (gridArray[y][x].STATUS) {
                 case "apple":
                     addHead(x, y);
+                    spawnApple();
                     break;
                 case "snake":
                     throw new Exception();
@@ -154,6 +158,7 @@ class SnakePage {
                     break;
             }
         } catch (Exception e) {
+            System.out.println("Game over");
             System.exit(0);
         }
 
@@ -175,6 +180,10 @@ class SnakePage {
         int x = randomGenerator.nextInt(20);
         int y = randomGenerator.nextInt(20);
 
-        gridArray[y][x].setApple();
+        if (gridArray[y][x].STATUS.equals("empty")) {
+            gridArray[y][x].setApple();
+        } else {
+            spawnApple();
+        }
     }
 }
