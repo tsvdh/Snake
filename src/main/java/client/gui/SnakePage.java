@@ -54,6 +54,8 @@ class SnakePage {
         grid.setAlignment(Pos.CENTER);
         //set up example
         gridArray[15][10].setApple();
+        gridArray[5][19].setApple();
+        gridArray[7][12].setApple();
         gridArray[3][1].setSnake();
         gridArray[3][2].setSnake();
         gridArray[3][3].setSnake();
@@ -134,11 +136,22 @@ class SnakePage {
                 break;
         }
 
-        snakeList.getFirst().setSnake();
-        gridArray[y][x].setHead();
-        snakeList.addFirst(gridArray[y][x]);
+        switch (gridArray[y][x].STATUS) {
+            case "apple":
+                snakeList.getFirst().setSnake();
+                gridArray[y][x].setHead();
+                snakeList.addFirst(gridArray[y][x]);
+                break;
+            default:
+                snakeList.getFirst().setSnake();
+                gridArray[y][x].setHead();
+                snakeList.addFirst(gridArray[y][x]);
 
-        snakeList.getLast().setEmpty();
-        snakeList.removeLast();
+                snakeList.getLast().setEmpty();
+                snakeList.removeLast();
+                break;
+        }
+
+
     }
 }
