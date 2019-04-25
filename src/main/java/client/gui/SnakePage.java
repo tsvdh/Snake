@@ -111,15 +111,7 @@ class SnakePage {
         stage.setScene(scene);
 
         //Starting the game
-        Random randomGenerator = new Random();
-        int x = randomGenerator.nextInt(20);
-        int y = randomGenerator.nextInt(20);
-        gridArray[y][x].setHead();
-        snakeList.addFirst(gridArray[y][x]);
-        spawnApple();
-
-        scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new UpdateThread(), 0, 250, TimeUnit.MILLISECONDS);
+        setUpGame();
     }
 
     static void move() {
@@ -159,7 +151,7 @@ class SnakePage {
             }
         } catch (Exception e) {
             System.out.println("Game over");
-            System.exit(0);
+            scheduler.shutdown();
         }
 
     }
@@ -185,5 +177,17 @@ class SnakePage {
         } else {
             spawnApple();
         }
+    }
+
+    private static void setUpGame() {
+        Random randomGenerator = new Random();
+        int x = randomGenerator.nextInt(20);
+        int y = randomGenerator.nextInt(20);
+        gridArray[y][x].setHead();
+        snakeList.addFirst(gridArray[y][x]);
+        spawnApple();
+
+        scheduler = Executors.newSingleThreadScheduledExecutor();
+        scheduler.scheduleAtFixedRate(new UpdateThread(), 0, 250, TimeUnit.MILLISECONDS);
     }
 }
