@@ -110,6 +110,8 @@ class SnakePage {
         Scene scene = new Scene(pane, Sizes.STAGE_WIDTH, Sizes.STAGE_HEIGHT);
         stage.setScene(scene);
 
+        //scene.setOnKeyPressed(event -> System.out.println("A key was pressed"));
+
         //Starting the game
         setUpGame();
     }
