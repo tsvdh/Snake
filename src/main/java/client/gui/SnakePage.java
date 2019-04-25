@@ -12,8 +12,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-
 class SnakePage {
+
+    private static SnakeButton[][] gridArray = new SnakeButton[20][20];
 
     static Pane build(Stage stage) {
 
@@ -22,20 +23,9 @@ class SnakePage {
         returnButton.setText("back");
         returnButton.setFont(new Font(14));
 
-        Button grid1 = new Button();
-        grid1.setMinSize(30, 30);
-        grid1.setStyle("-fx-background-color: green;"
-                + "-fx-border-style: solid;"
-                + "-fx-border-width: 1px;"
-                + "-fx-border-color: black;"
-                + "-fx-border-radius: 0px");
-        Button grid2 = new Button();
-        grid2.setStyle("-fx-background-color: lightgrey;"
-                + "-fx-border-style: solid;"
-                + "-fx-border-width: 1px;"
-                + "-fx-border-color: black;"
-                + "-fx-border-radius: 0px");
-        grid2.setMinSize(30, 30);
+        SnakeButton grid1 = new SnakeButton();
+        SnakeButton grid2 = new SnakeButton();
+        grid1.setApple();
 
         //Making the layouts
         HBox topHBox = new HBox();
@@ -44,9 +34,8 @@ class SnakePage {
         topHBox.setAlignment(Pos.CENTER_LEFT);
 
         GridPane grid = new GridPane();
-        grid.setMinSize(500, 500);
-        grid.add(grid1, 0, 0);
-        grid.add(grid2, 1, 0);
+        buildGrid(grid);
+        grid.setPrefSize(grid.getWidth() + 50, grid.getHeight() + 50);
         grid.setAlignment(Pos.CENTER);
 
         GridPane buttons = new GridPane();
@@ -64,6 +53,15 @@ class SnakePage {
         Platform.runLater(grid :: requestFocus);
 
         return border;
+    }
+
+    private static void buildGrid(GridPane grid) {
+        for (int y = 0; y < 20; y++) {
+            for (int x = 0; x < 20; x++) {
+                gridArray[y][x] = new SnakeButton();
+                grid.add(gridArray[y][x], x, y);
+            }
+        }
     }
 
     static void set(Stage stage, Pane pane) {
