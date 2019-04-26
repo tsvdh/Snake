@@ -8,7 +8,7 @@ import static org.junit.Assert.*;
 
 public class ScoreKeeperTest {
 
-    static int oldScore;
+    private static int oldScore;
 
     @BeforeClass
     public static void setUp() {
@@ -25,5 +25,28 @@ public class ScoreKeeperTest {
         ScoreKeeper.setScore(42);
 
         assertEquals(42, ScoreKeeper.getScore());
+    }
+
+    @Test
+    public void classCall() {
+        ScoreKeeper scoreKeeper = new ScoreKeeper();
+    }
+
+    @Test
+    public void wrongPath1() {
+        ScoreKeeper.path = "bla";
+
+        assertEquals(-1, ScoreKeeper.getScore());
+
+        ScoreKeeper.path = "data/score.txt";
+    }
+
+    @Test
+    public void wrongPath2() {
+        ScoreKeeper.path = "bla";
+
+        assertEquals(-1, ScoreKeeper.getScore());
+
+        ScoreKeeper.path = "data/score.txt";
     }
 }

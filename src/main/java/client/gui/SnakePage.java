@@ -194,6 +194,6 @@ class SnakePage {
         spawnApple();
 
         scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new UpdateThread(), 0, 250, TimeUnit.MILLISECONDS);
+        scheduler.scheduleAtFixedRate(new UpdateThread(), 0, 100, TimeUnit.MILLISECONDS);
     }
 }

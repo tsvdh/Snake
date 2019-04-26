@@ -42,7 +42,6 @@ class PrimesPage {
         stopButton.setVisible(false);
 
         //Making the layouts
-        HBox inputHBox = new HBox();
         Text text1 = new Text("Calculate primes from");
         text1.setFont(new Font(17));
         Text text2 = new Text("to");
@@ -51,6 +50,7 @@ class PrimesPage {
         textField1.setFont(new Font(17));
         TextField textField2 = new TextField();
         textField2.setFont(new Font(17));
+        HBox inputHBox = new HBox();
         inputHBox.getChildren().addAll( text1,
                                         textField1,
                                         text2,
@@ -126,6 +126,8 @@ class PrimesPage {
                         calcButton.setDisable(false);
                     });
 
+                    ExecutorService executorService = Executors.newSingleThreadExecutor();
+
                     returnButton.setOnAction(returnAction -> {
                         task.cancel(true);
                         HomePage.set(stage, HomePage.build(stage));
@@ -139,7 +141,6 @@ class PrimesPage {
                         calcButton.setDisable(false);
                     });
 
-                    ExecutorService executorService = Executors.newSingleThreadExecutor();
                     executorService.execute(task);
                 } else {
                     result.setText("The first number must be "
