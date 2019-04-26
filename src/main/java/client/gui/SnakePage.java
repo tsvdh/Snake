@@ -22,7 +22,9 @@ class SnakePage {
 
     private static GridElement[][] gridArray = new GridElement[20][20];
     private static LinkedList<GridElement> snakeList = new LinkedList<>();
-    private static String direction = "none";
+    private static String direction;
+    private static boolean directionSet;
+    private static String nextDirection;
     private static ScheduledExecutorService scheduler;
 
     static Pane build(Stage stage) {
@@ -78,13 +80,10 @@ class SnakePage {
             HomePage.set(stage, HomePage.build(stage));
         });
 
-        upButton.setOnAction(event -> direction = "up");
-
-        downButton.setOnAction(event -> direction = "down");
-
-        leftButton.setOnAction(event -> direction = "left");
-
-        rightButton.setOnAction(event -> direction = "right");
+        upButton.setOnAction(event -> setDirection("up"));
+        downButton.setOnAction(event -> setDirection("down"));
+        leftButton.setOnAction(event -> setDirection("left"));
+        rightButton.setOnAction(event -> setDirection("right"));
 
         Platform.runLater(grid :: requestFocus);
 
@@ -110,7 +109,7 @@ class SnakePage {
 
         scene.setOnKeyPressed(event -> {
             if (event.getCode().isArrowKey()) {
-                direction = event.getCode().toString().toLowerCase();
+                setDirection(event.getCode().toString().toLowerCase());
             }
         });
 
@@ -158,6 +157,11 @@ class SnakePage {
             scheduler.shutdown();
         }
 
+        directionSet = false;
+        if (nextDirection != null) {
+            direction = nextDirection;
+            nextDirection = null;
+        }
     }
 
     private static void addHead(int x, int y) {
@@ -186,6 +190,8 @@ class SnakePage {
     private static void setUpGame() {
         direction = "none";
         snakeList.clear();
+        directionSet = false;
+        nextDirection = null;
 
         Random randomGenerator = new Random();
         int x = randomGenerator.nextInt(20);
@@ -196,5 +202,14 @@ class SnakePage {
 
         scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(new UpdateThread(), 0, 100, TimeUnit.MILLISECONDS);
+    }
+
+    private static void setDirection(String direction) {
+        if (!directionSet) {
+            SnakePage.direction = direction;
+            directionSet = true;
+        } else {
+            SnakePage.nextDirection = direction;
+        }
     }
 }
