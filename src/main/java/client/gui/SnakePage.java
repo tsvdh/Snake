@@ -92,8 +92,6 @@ class SnakePage {
     }
 
     private static void buildGrid(GridPane grid) {
-        direction = "none";
-        snakeList.clear();
         for (int y = 0; y < 20; y++) {
             for (int x = 0; x < 20; x++) {
                 gridArray[y][x] = new GridElement(x, y);
@@ -186,6 +184,9 @@ class SnakePage {
     }
 
     private static void setUpGame() {
+        direction = "none";
+        snakeList.clear();
+
         Random randomGenerator = new Random();
         int x = randomGenerator.nextInt(20);
         int y = randomGenerator.nextInt(20);
