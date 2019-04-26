@@ -43,9 +43,9 @@ public class ScoreKeeperTest {
 
     @Test
     public void wrongPath2() {
-        ScoreKeeper.path = "bla";
+        ScoreKeeper.path = "data";
 
-        assertEquals(-1, ScoreKeeper.getScore());
+        assertEquals(-1, ScoreKeeper.setScore(42));
 
         ScoreKeeper.path = "data/score.txt";
     }

@@ -52,7 +52,7 @@ public class PrimeTaskTest {
 
         task.setOnRunning(event -> {
             task.cancel(true);
-            assertTrue(task.isCancelled());
+            assertNull(task.getValue());
         });
 
         executorService.execute(task);
