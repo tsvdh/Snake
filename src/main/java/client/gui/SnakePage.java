@@ -1,14 +1,17 @@
 package client.gui;
 
+import client.ScoreKeeper;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -26,6 +29,12 @@ class SnakePage {
     private static boolean directionSet;
     private static String nextDirection;
     private static ScheduledExecutorService scheduler;
+
+    private static Label currentScore;
+    private static Label highScore;
+    final private static String scoreText = "Current score: ";
+    final private static String highScoreText = "High score: ";
+
 
     static Pane build(Stage stage) {
 
@@ -62,16 +71,29 @@ class SnakePage {
         grid.setAlignment(Pos.CENTER);
 
         GridPane buttons = new GridPane();
-        buttons.setAlignment(Pos.CENTER);
-        buttons.setPadding(new Insets(0, 0, 0 , 50));
+        buttons.setPadding(new Insets(100, 0, 0 , 0));
         buttons.add(upButton, 1, 0);
         buttons.add(downButton, 1, 2);
         buttons.add(leftButton, 0, 1);
         buttons.add(rightButton, 2, 1);
 
+        currentScore = new Label();
+        currentScore.setFont(new Font(17));
+        currentScore.setText(scoreText + "-");
+        highScore = new Label();
+        highScore.setFont(new Font(17));
+        highScore.setText(highScoreText + "-");
+
+        VBox leftVBox = new VBox();
+        leftVBox.getChildren().addAll(currentScore,
+                                    highScore,
+                                    buttons);
+        leftVBox.setAlignment(Pos.CENTER);
+        leftVBox.setPadding(new Insets(0, 0, 0, 50));
+
         BorderPane border = new BorderPane();
         border.setCenter(grid);
-        border.setLeft(buttons);
+        border.setLeft(leftVBox);
         border.setTop(topHBox);
 
         //Setting the button actions
@@ -137,6 +159,7 @@ class SnakePage {
             default:
                 break;
         }
+
         try {
             switch (gridArray[y][x].STATUS) {
                 case "apple":
@@ -153,6 +176,11 @@ class SnakePage {
                     break;
             }
         } catch (Exception e) {
+            int score = snakeList.size();
+            if (ScoreKeeper.getScore() < score) {
+                ScoreKeeper.setScore(score);
+            }
+            
             System.out.println("Game over");
             scheduler.shutdown();
         }
@@ -192,6 +220,8 @@ class SnakePage {
         snakeList.clear();
         directionSet = false;
         nextDirection = null;
+        currentScore.setText(scoreText + 0);
+        highScore.setText(highScoreText + ScoreKeeper.getScore());
 
         Random randomGenerator = new Random();
         int x = randomGenerator.nextInt(20);

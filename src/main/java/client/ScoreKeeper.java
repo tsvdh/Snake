@@ -5,11 +5,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-class ScoreKeeper {
+public class ScoreKeeper {
 
     static String path = "data/score.txt";
 
-    static int getScore() {
+    public static int getScore() {
         int score = -1;
         try {
             Scanner scanner = new Scanner(new File(path));
@@ -20,7 +20,7 @@ class ScoreKeeper {
         return score;
     }
 
-    static int setScore(int score) {
+    public static int setScore(int score) {
         try {
             FileWriter writer = new FileWriter(new File(path), false);
             writer.write(String.valueOf(score));
