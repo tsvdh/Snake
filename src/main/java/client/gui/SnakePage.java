@@ -4,6 +4,7 @@ import client.ScoreKeeper;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -136,9 +137,15 @@ class SnakePage {
         stage.setScene(scene);
 
         scene.setOnKeyPressed(event -> {
+            scene.setCursor(Cursor.NONE);
+
             if (event.getCode().isArrowKey()) {
                 setDirection(event.getCode().toString().toLowerCase());
             }
+        });
+
+        scene.setOnMouseMoved(event -> {
+            scene.setCursor(Cursor.DEFAULT);
         });
 
         //Starting the game
