@@ -160,17 +160,21 @@ class SnakePage {
                 break;
         }
 
+        boolean playing = false;
+
         try {
             switch (gridArray[y][x].STATUS) {
                 case "apple":
                     addHead(x, y);
                     spawnApple();
+                    playing = true;
                     break;
                 case "snake":
                     throw new Exception();
                 case "empty":
                     addHead(x, y);
                     removeTail();
+                    playing = true;
                     break;
                 default:
                     break;
@@ -180,9 +184,15 @@ class SnakePage {
             if (ScoreKeeper.getScore() < score) {
                 ScoreKeeper.setScore(score);
             }
-            
+
             System.out.println("Game over");
             scheduler.shutdown();
+        }
+
+        if (playing) {
+            Platform.runLater(() -> {
+                currentScore.setText(scoreText + snakeList.size());
+            });
         }
 
         directionSet = false;
