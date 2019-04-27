@@ -36,11 +36,13 @@ class SnakePage {
     final private static String scoreText = "Current score: ";
     final private static String highScoreText = "High score: ";
 
+    private static Button returnButton;
+
 
     static Pane build(Stage stage) {
 
         //Making the buttons
-        Button returnButton = new Button();
+        returnButton = new Button();
         returnButton.setText("back");
         returnButton.setFont(new Font(14));
 
@@ -116,9 +118,11 @@ class SnakePage {
     private static void buildGrid(GridPane grid) {
         for (int y = 0; y < 20; y++) {
             for (int x = 0; x < 20; x++) {
-                gridArray[y][x] = new GridElement(x, y);
+                if (grid != null) {
+                    gridArray[y][x] = new GridElement(x, y);
+                    grid.add(gridArray[y][x], x, y);
+                }
                 gridArray[y][x].setEmpty();
-                grid.add(gridArray[y][x], x, y);
             }
         }
     }
@@ -232,6 +236,8 @@ class SnakePage {
         currentScore.setText(scoreText + 0);
         highScore.setText(highScoreText + ScoreKeeper.getScore());
 
+        buildGrid(null);
+
         Random randomGenerator = new Random();
         int x = randomGenerator.nextInt(20);
         int y = randomGenerator.nextInt(20);
@@ -288,6 +294,18 @@ class SnakePage {
         Stage stage = new Stage();
         stage.initModality(Modality.APPLICATION_MODAL);
         stage.setScene(new Scene(vBox));
+
+        //Setting the button actions
+        quitButton.setOnAction(event -> {
+            stage.close();
+            returnButton.fire();
+        });
+
+        againButton.setOnAction(event -> {
+            stage.close();
+            setUpGame();
+        });
+
         stage.showAndWait();
     }
 }
