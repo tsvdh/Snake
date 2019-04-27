@@ -13,6 +13,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.LinkedList;
@@ -184,15 +185,13 @@ class SnakePage {
             if (ScoreKeeper.getScore() < score) {
                 ScoreKeeper.setScore(score);
             }
-
-            System.out.println("Game over");
             scheduler.shutdown();
+
+            Platform.runLater(SnakePage :: gameOverScreen);
         }
 
         if (playing) {
-            Platform.runLater(() -> {
-                currentScore.setText(scoreText + snakeList.size());
-            });
+            Platform.runLater(() -> currentScore.setText(scoreText + snakeList.size()));
         }
 
         directionSet = false;
@@ -251,5 +250,44 @@ class SnakePage {
         } else {
             SnakePage.nextDirection = direction;
         }
+    }
+
+    private static void gameOverScreen() {
+
+        //Making the buttons
+        Button againButton = new Button();
+        againButton.setText("Play again!");
+        againButton.setPrefSize(120, 20);
+        againButton.setFont(new Font(17));
+        Button quitButton = new Button();
+        quitButton.setText("Quit");
+        quitButton.setFont(new Font(17));
+        quitButton.setPrefSize(120, 20);
+
+        //Making the layouts
+        HBox hBox = new HBox();
+        hBox.getChildren().addAll(againButton,
+                                quitButton);
+        hBox.setSpacing(15);
+        hBox.setAlignment(Pos.CENTER);
+
+        Label label = new Label();
+        label.setText("Game over!");
+        label.setFont(new Font(25));
+
+        VBox vBox = new VBox();
+        vBox.getChildren().addAll(label,
+                                hBox);
+        vBox.setSpacing(30);
+        vBox.setAlignment(Pos.CENTER);
+        vBox.setPadding(new Insets(20));
+
+        Platform.runLater(vBox :: requestFocus);
+
+        //Setting scene and stage
+        Stage stage = new Stage();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.setScene(new Scene(vBox));
+        stage.showAndWait();
     }
 }
