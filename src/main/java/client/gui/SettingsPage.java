@@ -1,5 +1,6 @@
 package client.gui;
 
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -26,7 +27,8 @@ public class SettingsPage {
         choiceBox.getItems().addAll("easy",
                                             "normal",
                                             "hard");
-        
+        choiceBox.setStyle("-fx-font-size: 15");
+
         Label label = new Label();
         label.setText("Difficulty of Snake: ");
         label.setFont(new Font(17));
@@ -50,6 +52,8 @@ public class SettingsPage {
         returnButton.setOnAction(event -> {
             HomePage.set(stage, HomePage.build(stage));
         });
+
+        Platform.runLater(border :: requestFocus);
 
         return border;
     }
