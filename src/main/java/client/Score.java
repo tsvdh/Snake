@@ -5,7 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class ScoreKeeper {
+public class Score {
 
     static String path = "data/score.txt";
 

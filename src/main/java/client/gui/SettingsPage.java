@@ -1,5 +1,6 @@
 package client.gui;
 
+import client.Difficulty;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -28,6 +29,15 @@ public class SettingsPage {
                                             "normal",
                                             "hard");
         choiceBox.setStyle("-fx-font-size: 15");
+        choiceBox.setValue(Difficulty.getDifficulty());
+
+        choiceBox.setOnAction(event -> {
+            String newDifficulty = choiceBox.getValue();
+
+            if (!Difficulty.getDifficulty().equals(newDifficulty)) {
+                Difficulty.setDifficulty(newDifficulty);
+            }
+        });
 
         Label label = new Label();
         label.setText("Difficulty of Snake: ");

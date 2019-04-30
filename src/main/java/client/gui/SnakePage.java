@@ -1,6 +1,7 @@
 package client.gui;
 
-import client.ScoreKeeper;
+import client.Difficulty;
+import client.Score;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -13,8 +14,11 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
+import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -76,11 +80,12 @@ class SnakePage {
         grid.setAlignment(Pos.CENTER);
 
         GridPane buttons = new GridPane();
-        buttons.setPadding(new Insets(100, 0, 0 , 0));
+        buttons.setPadding(new Insets(100, 0, 100 , 0));
         buttons.add(upButton, 1, 0);
         buttons.add(downButton, 1, 2);
         buttons.add(leftButton, 0, 1);
         buttons.add(rightButton, 2, 1);
+        buttons.setAlignment(Pos.CENTER);
 
         currentScore = new Label();
         currentScore.setFont(new Font(17));
@@ -89,10 +94,27 @@ class SnakePage {
         highScore.setFont(new Font(17));
         highScore.setText(highScoreText + "-");
 
+        Text text = new Text();
+        text.setFont(new Font(17));
+        text.setText("Difficulty: ");
+        Text difficulty = new Text();
+        difficulty.setFont(Font.font(Font.getDefault().toString(), FontWeight.BOLD, 20));
+        difficulty.setText(Difficulty.getDifficulty());
+
+        StackPane alignmentBox = new StackPane();
+        alignmentBox.getChildren().add(difficulty);
+        alignmentBox.setPadding(new Insets(0, 0, 3, 0));
+
+        HBox difficultyHBox = new HBox();
+        difficultyHBox.getChildren().addAll(text,
+                                            alignmentBox);
+        difficultyHBox.setAlignment(Pos.CENTER);
+
         VBox leftVBox = new VBox();
         leftVBox.getChildren().addAll(currentScore,
                                     highScore,
-                                    buttons);
+                                    buttons,
+                                    difficultyHBox);
         leftVBox.setAlignment(Pos.CENTER);
         leftVBox.setPadding(new Insets(0, 0, 0, 50));
 
@@ -194,8 +216,8 @@ class SnakePage {
             }
         } catch (Exception e) {
             int score = snakeList.size();
-            if (ScoreKeeper.getScore() < score) {
-                ScoreKeeper.setScore(score);
+            if (Score.getScore() < score) {
+                Score.setScore(score);
             }
             scheduler.shutdown();
 
@@ -242,7 +264,7 @@ class SnakePage {
         directionSet = false;
         nextDirection = null;
         currentScore.setText(scoreText + 0);
-        highScore.setText(highScoreText + ScoreKeeper.getScore());
+        highScore.setText(highScoreText + Score.getScore());
 
         buildGrid(null);
 
