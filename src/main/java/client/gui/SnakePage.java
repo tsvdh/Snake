@@ -144,7 +144,9 @@ class SnakePage {
             }
         });
 
-        scene.setOnMouseMoved(event -> scene.setCursor(Cursor.DEFAULT));
+        scene.setOnMouseMoved(event -> {
+            scene.setCursor(Cursor.DEFAULT);
+        });
 
         //Starting the game
         setUpGame();
