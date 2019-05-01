@@ -30,8 +30,9 @@ import java.util.concurrent.TimeUnit;
 
 class SnakePage {
 
-    private static GridElement[][] gridArray = new GridElement[20][20];
-    private static LinkedList<GridElement> snakeList = new LinkedList<>();
+    static GridElement[][] gridArray = new GridElement[20][20];
+    static LinkedList<GridElement> snakeList = new LinkedList<>();
+
     private static String direction;
     private static boolean directionSet;
     private static String nextDirection;
@@ -43,6 +44,8 @@ class SnakePage {
     final private static String highScoreText = "High score: ";
 
     private static Button returnButton;
+
+    private static AI_v1 ai;
 
 
     static Pane build(Stage stage) {
@@ -233,12 +236,14 @@ class SnakePage {
             direction = nextDirection;
             nextDirection = null;
         }
+
+        setDirection(ai.nextDirection());
     }
 
     private static void addHead(int x, int y) {
         snakeList.getFirst().setSnake();
-        gridArray[y][x].setHead();
         snakeList.addFirst(gridArray[y][x]);
+        gridArray[y][x].setHead();
     }
 
     private static void removeTail() {
@@ -293,6 +298,8 @@ class SnakePage {
             default:
                 period = -1;
         }
+
+        ai = new AI_v1();
 
         scheduler.scheduleAtFixedRate(new UpdateThread(), 0, period, TimeUnit.MILLISECONDS);
     }
