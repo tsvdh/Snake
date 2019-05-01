@@ -15,7 +15,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class SettingsPage {
+class SettingsPage {
 
     static Pane build(Stage stage) {
 

@@ -29,12 +29,12 @@ public class ScoreTest {
 
     @Test
     public void classCall() {
-        Score score = new Score();
+        new Score();
     }
 
     @Test
     public void wrongPath1() {
-        Score.path = "bla";
+        Score.path = "src/test/java/client/testDirectory";
 
         assertEquals(-1, Score.getScore());
 
@@ -43,7 +43,7 @@ public class ScoreTest {
 
     @Test
     public void wrongPath2() {
-        Score.path = "data";
+        Score.path = "src/test/java/client/testDirectory";
 
         assertEquals(-1, Score.setScore(42));
 
