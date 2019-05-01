@@ -276,7 +276,25 @@ class SnakePage {
         spawnApple();
 
         scheduler = Executors.newSingleThreadScheduledExecutor();
-        scheduler.scheduleAtFixedRate(new UpdateThread(), 0, 100, TimeUnit.MILLISECONDS);
+
+        String difficulty = Difficulty.getDifficulty();
+        int period;
+
+        switch (difficulty) {
+            case "easy":
+                period = 300;
+                break;
+            case "normal":
+                period = 200;
+                break;
+            case "hard":
+                period = 100;
+                break;
+            default:
+                period = -1;
+        }
+
+        scheduler.scheduleAtFixedRate(new UpdateThread(), 0, period, TimeUnit.MILLISECONDS);
     }
 
     private static void setDirection(String direction) {
