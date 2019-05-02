@@ -208,7 +208,9 @@ class SnakePage {
                     playing = true;
                     break;
                 case "snake":
-                    throw new Exception();
+                    if (snakeList.indexOf(gridArray[y][x]) != snakeList.size() - 1) {
+                        throw new IndexOutOfBoundsException();
+                    }
                 case "empty":
                     removeTail();
                     addHead(x, y);
@@ -217,7 +219,7 @@ class SnakePage {
                 default:
                     break;
             }
-        } catch (Exception e) {
+        } catch (IndexOutOfBoundsException e) {
             int score = snakeList.size();
             if (Score.getScore() < score) {
                 Score.setScore(score);
@@ -241,9 +243,11 @@ class SnakePage {
     }
 
     private static void addHead(int x, int y) {
-        snakeList.getFirst().setSnake();
         snakeList.addFirst(gridArray[y][x]);
         gridArray[y][x].setHead();
+        if (snakeList.size() > 1) {
+            snakeList.get(1).setSnake();
+        }
     }
 
     private static void removeTail() {
