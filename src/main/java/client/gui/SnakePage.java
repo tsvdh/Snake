@@ -210,8 +210,8 @@ class SnakePage {
                 case "snake":
                     throw new Exception();
                 case "empty":
-                    addHead(x, y);
                     removeTail();
+                    addHead(x, y);
                     playing = true;
                     break;
                 default:
