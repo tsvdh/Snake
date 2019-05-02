@@ -9,6 +9,9 @@ abstract class AI {
     GridElement[][] gridArray;
     LinkedList<GridElement> snakeList;
 
+    Position head;
+    Position apple;
+
     AI() {
         gridArray = SnakePage.gridArray;
         snakeList = SnakePage.snakeList;

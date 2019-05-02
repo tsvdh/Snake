@@ -9,8 +9,8 @@ class Aggressive_AI extends AI{
     @Override
     String nextDirection() {
 
-        Position head = getHead();
-        Position apple = findApple();
+        head = getHead();
+        apple = findApple();
 
         if (apple == null) {
             return null;
@@ -20,29 +20,49 @@ class Aggressive_AI extends AI{
         if (head.getX() != apple.getX()) {
             if (head.getX() > apple.getX()) {
                 if (lastDirection.equals("right")) {
-                    direction = edgeDirectionHorizontal(head);
+                    direction = directionHorizontal180(head);
                 } else {
-                    direction = "left";
+                    Position left = head.left();
+                    if (snakeList.indexOf(gridArray[left.getY()][left.getX()]) != -1) {
+                        direction = directionForParallelHorizontal(left);
+                    } else {
+                        direction = "left";
+                    }
                 }
             } else {
                 if (lastDirection.equals("left")) {
-                    direction = edgeDirectionHorizontal(head);
+                    direction = directionHorizontal180(head);
                 } else {
-                    direction = "right";
+                    Position right = head.right();
+                    if (snakeList.indexOf(gridArray[right.getY()][right.getX()]) != -1) {
+                        direction = directionForParallelHorizontal(right);
+                    } else {
+                        direction = "right";
+                    }
                 }
             }
         } else {
             if (head.getY() > apple.getY()) {
                 if (lastDirection.equals("down")) {
-                    direction = edgeDirectionVertical(head);
+                    direction = directionVertical180(head);
                 } else {
-                    direction = "up";
+                    Position up = head.up();
+                    if (snakeList.indexOf(gridArray[up.getY()][up.getX()]) != -1) {
+                        direction = directionForParallelVertical(up);
+                    } else {
+                        direction = "up";
+                    }
                 }
             } else {
                 if (lastDirection.equals("up")) {
-                    direction = edgeDirectionVertical(head);
+                    direction = directionVertical180(head);
                 } else {
-                    direction = "down";
+                    Position down = head.down();
+                    if (snakeList.indexOf(gridArray[down.getY()][down.getX()]) != -1) {
+                        direction = directionForParallelVertical(down);
+                    } else {
+                        direction = "down";
+                    }
                 }
             }
         }
@@ -50,7 +70,7 @@ class Aggressive_AI extends AI{
         return direction;
     }
 
-    private String edgeDirectionHorizontal(Position head) {
+    private String directionHorizontal180(Position head) {
         if (head.getY() == 0) {
             return  "down";
         } else {
@@ -58,11 +78,53 @@ class Aggressive_AI extends AI{
         }
     }
 
-    private String edgeDirectionVertical(Position head) {
+    private String directionVertical180(Position head) {
         if (head.getX() == 0) {
             return  "right";
         } else {
             return  "left";
+        }
+    }
+
+    private String directionForParallelHorizontal(Position position) {
+        Position up = position.up();
+        Position down = position.down();
+
+        int upIndex = snakeList.indexOf(gridArray[up.getY()][up.getX()]);
+        int downIndex = snakeList.indexOf(gridArray[down.getY()][down.getX()]);
+
+        if (upIndex == -1) {
+            return "up";
+        }
+        if (downIndex == -1) {
+            return "down";
+        }
+
+        if (upIndex > downIndex) {
+            return "up";
+        } else {
+            return "down";
+        }
+    }
+
+    private String directionForParallelVertical(Position position) {
+        Position left = position.left();
+        Position right = position.right();
+
+        int leftIndex = snakeList.indexOf(gridArray[left.getY()][left.getX()]);
+        int rightIndex = snakeList.indexOf(gridArray[right.getY()][right.getX()]);
+
+        if (leftIndex == -1) {
+            return "left";
+        }
+        if (rightIndex == -1) {
+            return "right";
+        }
+
+        if (leftIndex > rightIndex) {
+            return "left";
+        } else {
+            return "right";
         }
     }
 }
