@@ -31,7 +31,8 @@ class Aggressive_AI extends AI{
                     nextDirection = "left";
                 } else {
                     Position left = head.left();
-                    if (snakeList.indexOf(gridArray[left.getY()][left.getX()]) != -1) {
+                    int index = snakeList.indexOf(gridArray[left.getY()][left.getX()]);
+                    if (!(index == -1 || index == snakeList.size() - 1)) {
                         direction = directionForParallelHorizontal(left);
                     } else {
                         direction = "left";
@@ -43,7 +44,8 @@ class Aggressive_AI extends AI{
                     nextDirection = "right";
                 } else {
                     Position right = head.right();
-                    if (snakeList.indexOf(gridArray[right.getY()][right.getX()]) != -1) {
+                    int index = snakeList.indexOf(gridArray[right.getY()][right.getX()]);
+                    if (!(index == -1 || index == snakeList.size() - 1)) {
                         direction = directionForParallelHorizontal(right);
                     } else {
                         direction = "right";
@@ -57,7 +59,8 @@ class Aggressive_AI extends AI{
                     nextDirection = "up";
                 } else {
                     Position up = head.up();
-                    if (snakeList.indexOf(gridArray[up.getY()][up.getX()]) != -1) {
+                    int index = snakeList.indexOf(gridArray[up.getY()][up.getX()]);
+                    if (!(index == -1 || index == snakeList.size() - 1)) {
                         direction = directionForParallelVertical(up);
                     } else {
                         direction = "up";
@@ -69,7 +72,8 @@ class Aggressive_AI extends AI{
                     nextDirection = "down";
                 } else {
                     Position down = head.down();
-                    if (snakeList.indexOf(gridArray[down.getY()][down.getX()]) != -1) {
+                    int index = snakeList.indexOf(gridArray[down.getY()][down.getX()]);
+                    if (!(index == -1 || index == snakeList.size() - 1)) {
                         direction = directionForParallelVertical(down);
                     } else {
                         direction = "down";
