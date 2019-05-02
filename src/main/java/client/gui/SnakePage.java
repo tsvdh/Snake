@@ -231,13 +231,13 @@ class SnakePage {
             Platform.runLater(() -> currentScore.setText(scoreText + snakeList.size()));
         }
 
-        setDirection(ai.nextDirection());
-
         directionSet = false;
         if (nextDirection != null) {
             direction = nextDirection;
             nextDirection = null;
         }
+
+        direction = ai.nextDirection();
     }
 
     private static void addHead(int x, int y) {

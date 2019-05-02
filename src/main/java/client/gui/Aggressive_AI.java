@@ -5,9 +5,16 @@ import client.Position;
 class Aggressive_AI extends AI{
 
     private String lastDirection = "none";
+    private String nextDirection = null;
 
     @Override
     String nextDirection() {
+        if (nextDirection != null) {
+            String temp = nextDirection;
+            nextDirection = null;
+            lastDirection = temp;
+            return temp;
+        }
 
         head = getHead();
         apple = findApple();
@@ -21,6 +28,7 @@ class Aggressive_AI extends AI{
             if (head.getX() > apple.getX()) {
                 if (lastDirection.equals("right")) {
                     direction = directionHorizontal180(head);
+                    nextDirection = "left";
                 } else {
                     Position left = head.left();
                     if (snakeList.indexOf(gridArray[left.getY()][left.getX()]) != -1) {
@@ -32,6 +40,7 @@ class Aggressive_AI extends AI{
             } else {
                 if (lastDirection.equals("left")) {
                     direction = directionHorizontal180(head);
+                    nextDirection = "right";
                 } else {
                     Position right = head.right();
                     if (snakeList.indexOf(gridArray[right.getY()][right.getX()]) != -1) {
@@ -45,6 +54,7 @@ class Aggressive_AI extends AI{
             if (head.getY() > apple.getY()) {
                 if (lastDirection.equals("down")) {
                     direction = directionVertical180(head);
+                    nextDirection = "up";
                 } else {
                     Position up = head.up();
                     if (snakeList.indexOf(gridArray[up.getY()][up.getX()]) != -1) {
@@ -56,6 +66,7 @@ class Aggressive_AI extends AI{
             } else {
                 if (lastDirection.equals("up")) {
                     direction = directionVertical180(head);
+                    nextDirection = "down";
                 } else {
                     Position down = head.down();
                     if (snakeList.indexOf(gridArray[down.getY()][down.getX()]) != -1) {
