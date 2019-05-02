@@ -4,12 +4,12 @@ import client.Position;
 
 import java.util.LinkedList;
 
-class AI_v1 {
+class Aggressive_AI {
 
     private GridElement[][] gridArray;
     private LinkedList<GridElement> snakeList;
 
-    AI_v1() {
+    Aggressive_AI() {
         gridArray = SnakePage.gridArray;
         snakeList = SnakePage.snakeList;
     }
