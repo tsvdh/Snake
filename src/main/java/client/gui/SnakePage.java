@@ -257,11 +257,11 @@ class SnakePage {
 
     private static void spawnApple() {
         Random randomGenerator = new Random();
-        //int x = randomGenerator.nextInt(20);
+        int x = randomGenerator.nextInt(20);
         int y = randomGenerator.nextInt(20);
 
-        if (gridArray[y][snakeList.getFirst().X].STATUS.equals("empty")) {
-            gridArray[y][snakeList.getFirst().X].setApple();
+        if (gridArray[y][x].STATUS.equals("empty")) {
+            gridArray[y][x].setApple();
         } else {
             spawnApple();
         }
