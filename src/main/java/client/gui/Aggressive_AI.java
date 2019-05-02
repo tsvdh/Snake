@@ -2,19 +2,13 @@ package client.gui;
 
 import client.Position;
 
-import java.util.LinkedList;
+class Aggressive_AI extends AI{
 
-class Aggressive_AI {
+    private String lastDirection = "none";
 
-    private GridElement[][] gridArray;
-    private LinkedList<GridElement> snakeList;
-
-    Aggressive_AI() {
-        gridArray = SnakePage.gridArray;
-        snakeList = SnakePage.snakeList;
-    }
-
+    @Override
     String nextDirection() {
+
         Position head = getHead();
         Position apple = findApple();
 
@@ -22,39 +16,53 @@ class Aggressive_AI {
             return null;
         }
 
+        String direction;
         if (head.getX() != apple.getX()) {
             if (head.getX() > apple.getX()) {
-                return "left";
+                if (lastDirection.equals("right")) {
+                    direction = edgeDirectionHorizontal(head);
+                } else {
+                    direction = "left";
+                }
             } else {
-                return "right";
+                if (lastDirection.equals("left")) {
+                    direction = edgeDirectionHorizontal(head);
+                } else {
+                    direction = "right";
+                }
             }
         } else {
             if (head.getY() > apple.getY()) {
-                return "up";
+                if (lastDirection.equals("down")) {
+                    direction = edgeDirectionVertical(head);
+                } else {
+                    direction = "up";
+                }
             } else {
-                return "down";
-            }
-        }
-    }
-
-    private Position findApple() {
-        for (int y = 0; y < 20; y++) {
-            for (int x = 0; x < 20; x++) {
-                if (gridArray[y][x].STATUS.equals("apple")) {
-                    return new Position(x, y);
+                if (lastDirection.equals("up")) {
+                    direction = edgeDirectionVertical(head);
+                } else {
+                    direction = "down";
                 }
             }
         }
-        return null;
+        lastDirection = direction;
+        return direction;
     }
 
-    private Position getHead() {
-        GridElement head = snakeList.getFirst();
-        Position position = new Position();
+    private String edgeDirectionHorizontal(Position head) {
+        if (head.getY() == 0) {
+            return  "down";
+        } else {
+            return  "up";
+        }
+    }
 
-        position.setX(head.X);
-        position.setY(head.Y);
-
-        return position;
+    private String edgeDirectionVertical(Position head) {
+        if (head.getX() == 0) {
+            return  "right";
+        } else {
+            return  "left";
+        }
     }
 }
