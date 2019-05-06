@@ -44,7 +44,7 @@ class GridElement extends Button {
 
     void setHead() {
         this.STATUS = "head";
-        this.setStyle("-fx-background-color: green;"
+        this.setStyle("-fx-background-color: darkgreen;"
                 + "-fx-border-style: solid;"
                 + "-fx-border-width: 0.5px;"
                 + "-fx-border-color: black;"

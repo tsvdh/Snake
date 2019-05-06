@@ -239,7 +239,9 @@ class SnakePage {
             nextDirection = null;
         }
 
-        direction = ai.nextDirection();
+        String aiDirection = ai.nextDirection();
+        System.out.println(aiDirection);
+        direction = aiDirection;
     }
 
     private static void addHead(int x, int y) {
