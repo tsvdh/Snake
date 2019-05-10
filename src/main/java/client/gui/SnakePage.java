@@ -163,22 +163,8 @@ class SnakePage {
             scene.setCursor(Cursor.NONE);
 
             if (event.getCode().isArrowKey()) {
-                switch (event.getCode()) {
-                    case UP:
-                        setDirection(Direction.UP);
-                        break;
-                    case DOWN:
-                        setDirection(Direction.DOWN);
-                        break;
-                    case LEFT:
-                        setDirection(Direction.LEFT);
-                        break;
-                    case RIGHT:
-                        setDirection(Direction.RIGHT);
-                        break;
-                    default:
-                        break;
-                }
+                String direction = event.getCode().toString().toUpperCase();
+                setDirection(Direction.valueOf(direction));
             }
         });
 
