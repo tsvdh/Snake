@@ -9,7 +9,6 @@ import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -19,7 +18,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.util.LinkedList;
@@ -33,9 +31,9 @@ class SnakePage {
     static GridElement[][] gridArray = new GridElement[20][20];
     static LinkedList<GridElement> snakeList = new LinkedList<>();
 
-    private static String direction;
+    private static Direction direction;
     private static boolean directionSet;
-    private static String nextDirection;
+    private static Direction nextDirection;
     private static ScheduledExecutorService scheduler;
 
     private static Label currentScore;
@@ -45,7 +43,7 @@ class SnakePage {
 
     static Button returnButton;
 
-    private static Aggressive_AI ai;
+    //private static Aggressive_AI ai;
 
 
     static Pane build(Stage stage) {
@@ -132,10 +130,10 @@ class SnakePage {
             HomePage.set(stage, HomePage.build(stage));
         });
 
-        upButton.setOnAction(event -> setDirection("up"));
-        downButton.setOnAction(event -> setDirection("down"));
-        leftButton.setOnAction(event -> setDirection("left"));
-        rightButton.setOnAction(event -> setDirection("right"));
+        upButton.setOnAction(event -> setDirection(Direction.UP));
+        downButton.setOnAction(event -> setDirection(Direction.DOWN));
+        leftButton.setOnAction(event -> setDirection(Direction.LEFT));
+        rightButton.setOnAction(event -> setDirection(Direction.RIGHT));
 
         Platform.runLater(grid :: requestFocus);
 
@@ -165,7 +163,22 @@ class SnakePage {
             scene.setCursor(Cursor.NONE);
 
             if (event.getCode().isArrowKey()) {
-                setDirection(event.getCode().toString().toLowerCase());
+                switch (event.getCode()) {
+                    case UP:
+                        setDirection(Direction.UP);
+                        break;
+                    case DOWN:
+                        setDirection(Direction.DOWN);
+                        break;
+                    case LEFT:
+                        setDirection(Direction.LEFT);
+                        break;
+                    case RIGHT:
+                        setDirection(Direction.RIGHT);
+                        break;
+                    default:
+                        break;
+                }
             }
         });
 
@@ -181,21 +194,9 @@ class SnakePage {
         int x = snakeList.getFirst().X;
         int y = snakeList.getFirst().Y;
 
-        switch (direction) {
-            case "up":
-                y--;
-                break;
-            case "down":
-                y++;
-                break;
-            case "left":
-                x--;
-                break;
-            case "right":
-                x++;
-                break;
-            default:
-                break;
+        if (!(direction == null)) {
+            x += direction.getDeltaX();
+            y += direction.getDeltaY();
         }
 
         boolean playing = false;
@@ -209,6 +210,9 @@ class SnakePage {
                     break;
                 case "snake":
                     if (snakeList.indexOf(gridArray[y][x]) != snakeList.size() - 1) {
+                        throw new IndexOutOfBoundsException();
+                    }
+                    else if (snakeList.size() == 2) {
                         throw new IndexOutOfBoundsException();
                     }
                 case "empty":
@@ -239,9 +243,9 @@ class SnakePage {
             nextDirection = null;
         }
 
-        String aiDirection = ai.nextDirection();
-        System.out.println(aiDirection);
-        direction = aiDirection;
+//        String aiDirection = ai.nextDirection();
+//        System.out.println(aiDirection);
+//        direction = aiDirection;
     }
 
     private static void addHead(int x, int y) {
@@ -270,7 +274,7 @@ class SnakePage {
     }
 
     static void setUpGame() {
-        direction = "none";
+        direction = null;
         snakeList.clear();
         directionSet = false;
         nextDirection = null;
@@ -305,12 +309,12 @@ class SnakePage {
                 period = -1;
         }
 
-        ai = new Aggressive_AI();
+        //ai = new Aggressive_AI();
 
         scheduler.scheduleAtFixedRate(new UpdateThread(), 0, period, TimeUnit.MILLISECONDS);
     }
 
-    private static void setDirection(String direction) {
+    private static void setDirection(Direction direction) {
         if (!directionSet) {
             SnakePage.direction = direction;
             directionSet = true;
