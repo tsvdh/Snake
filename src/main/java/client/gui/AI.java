@@ -1,7 +1,5 @@
 package client.gui;
 
-import client.Position;
-
 import java.util.LinkedList;
 
 abstract class AI {
@@ -38,5 +36,5 @@ abstract class AI {
         return position;
     }
 
-    abstract String nextDirection();
+    abstract Direction nextDirection();
 }

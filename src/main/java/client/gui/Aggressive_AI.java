@@ -1,8 +1,6 @@
-package client.gui;
+//package client.gui;
 
-import client.Position;
-
-class Aggressive_AI extends AI{
+/*class Aggressive_AI extends AI{
 
     private String lastDirection = "none";
     private String nextDirection = null;
@@ -143,3 +141,4 @@ class Aggressive_AI extends AI{
         }
     }
 }
+*/
