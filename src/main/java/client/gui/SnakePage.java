@@ -43,7 +43,7 @@ class SnakePage {
 
     static Button returnButton;
 
-    //private static Aggressive_AI ai;
+    private static Smart_Aggressive_AI ai;
 
 
     static Pane build(Stage stage) {
@@ -229,9 +229,11 @@ class SnakePage {
             nextDirection = null;
         }
 
-//        String aiDirection = ai.nextDirection();
-//        System.out.println(aiDirection);
-//        direction = aiDirection;
+        Direction aiDirection = ai.nextDirection();
+        System.out.println(aiDirection);
+        direction = aiDirection;
+
+//        direction = ai.nextDirection();
     }
 
     private static void addHead(int x, int y) {
@@ -295,7 +297,7 @@ class SnakePage {
                 period = -1;
         }
 
-        //ai = new Aggressive_AI();
+        ai = new Smart_Aggressive_AI();
 
         scheduler.scheduleAtFixedRate(new UpdateThread(), 0, period, TimeUnit.MILLISECONDS);
     }
