@@ -34,7 +34,9 @@ class SnakePage {
     private static Direction direction;
     private static boolean directionSet;
     private static Direction nextDirection;
+
     private static ScheduledExecutorService scheduler;
+    private static int period;
 
     private static Label currentScore;
     private static Label highScore;
@@ -181,6 +183,8 @@ class SnakePage {
     }
 
     static void move() {
+        //long currentTime = System.currentTimeMillis();
+
         int x = snakeList.getFirst().X;
         int y = snakeList.getFirst().Y;
 
@@ -197,6 +201,11 @@ class SnakePage {
                     addHead(x, y);
                     spawnApple();
                     playing = true;
+                    if (snakeList.size() >= 25) {
+                        scheduler.shutdownNow();
+                        scheduler = Executors.newSingleThreadScheduledExecutor();
+                        scheduler.scheduleAtFixedRate(new UpdateThread(), 0, period, TimeUnit.MILLISECONDS);
+                    }
                     break;
                 case "snake":
                     if (snakeList.indexOf(gridArray[y][x]) != snakeList.size() - 1) {
@@ -233,11 +242,14 @@ class SnakePage {
             nextDirection = null;
         }
 
-        Direction aiDirection = ai.nextDirection();
-        System.out.println(aiDirection);
-        direction = aiDirection;
+        //Direction aiDirection = ai.nextDirection();
+        //System.out.println(aiDirection);
+        //direction = aiDirection;
 
-//        direction = ai.nextDirection();
+        direction = ai.nextDirection();
+
+        //currentTime = System.currentTimeMillis() - currentTime;
+        //System.out.println(currentTime);
     }
 
     private static void addHead(int x, int y) {
@@ -285,7 +297,6 @@ class SnakePage {
         scheduler = Executors.newSingleThreadScheduledExecutor();
 
         String difficulty = Difficulty.getDifficulty();
-        int period;
 
         switch (difficulty) {
             case "easy":
@@ -303,7 +314,7 @@ class SnakePage {
 
         ai = new Smart_Aggressive_AI();
 
-        scheduler.scheduleAtFixedRate(new UpdateThread(), 0, period, TimeUnit.MILLISECONDS);
+        scheduler.scheduleAtFixedRate(new UpdateThread(), 0, 10, TimeUnit.MILLISECONDS);
     }
 
     private static void setDirection(Direction direction) {
