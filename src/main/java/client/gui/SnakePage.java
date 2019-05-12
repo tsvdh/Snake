@@ -172,6 +172,10 @@ class SnakePage {
             scene.setCursor(Cursor.DEFAULT);
         });
 
+        stage.setOnCloseRequest(event -> {
+            scheduler.shutdown();
+        });
+
         //Starting the game
         setUpGame();
     }
