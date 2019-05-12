@@ -315,7 +315,7 @@ class SnakePage {
 
         ai = new Smart_Aggressive_AI();
 
-        scheduler.scheduleAtFixedRate(new UpdateThread(), 0, 10, TimeUnit.MILLISECONDS);
+        scheduler.scheduleAtFixedRate(new UpdateThread(), 0, 100, TimeUnit.MILLISECONDS);
     }
 
     private static void setDirection(Direction direction) {

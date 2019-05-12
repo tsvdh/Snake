@@ -25,12 +25,19 @@ class Smart_Aggressive_AI extends AI{
         directions.removeAll(directionsToRemove);
 
 
+        if (directions.size() == 2) {
+            if (Direction.areOpposites(directions.get(0), directions.get(1))) {
+                System.out.println("Breadth first search for apple in one of the directions.");
+            }
+        }
+
+
         for (Direction direction : directions) {
             if (isCloser(head.go(direction))) {
                 return direction;
             }
         }
-        
+
 
         if (!directions.isEmpty()) {
             return directions.get(0);
