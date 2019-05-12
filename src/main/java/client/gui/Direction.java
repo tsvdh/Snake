@@ -39,4 +39,17 @@ enum  Direction {
     int getDeltaY() {
         return deltaY;
     }
+
+    static boolean areOpposites(Direction direction1, Direction direction2) {
+        boolean xOpposite = direction1.deltaX * -1 == direction2.deltaX;
+        boolean yOpposite = direction1.deltaY * -1 == direction2.deltaY;
+
+        //boolean xNonZero = direction1.deltaX != 0;
+        //boolean yNonZero = direction1.deltaY != 0;
+
+        //xOpposite = xOpposite && xNonZero;
+        //yOpposite = yOpposite && yNonZero;
+
+        return (xOpposite || yOpposite);
+    }
 }

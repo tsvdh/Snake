@@ -14,11 +14,11 @@ class Smart_Aggressive_AI extends AI{
 
 
         for (Direction direction : directions) {
-            Position position = head.to(direction);
+            Position position = head.go(direction);
             if (position.isOutOfBounds()) {
                 directionsToRemove.add(direction);
             }
-            else if (position.status().equals("snake") && !position.isTail()) {
+            else if (position.getStatus().equals("snake") && !position.isTail()) {
                 directionsToRemove.add(direction);
             }
         }
@@ -26,10 +26,11 @@ class Smart_Aggressive_AI extends AI{
 
 
         for (Direction direction : directions) {
-            if (isCloser(head.to(direction))) {
+            if (isCloser(head.go(direction))) {
                 return direction;
             }
         }
+        
 
         if (!directions.isEmpty()) {
             return directions.get(0);

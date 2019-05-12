@@ -44,7 +44,7 @@ class Position {
         return new Position(this.x + 1, this.y);
     }
 
-    Position to(Direction direction) {
+    Position go(Direction direction) {
         switch (direction) {
             case UP:
                 return up();
@@ -59,7 +59,7 @@ class Position {
         }
     }
 
-    String status() {
+    String getStatus() {
         return SnakePage.gridArray[this.y][this.x].STATUS;
     }
 
@@ -88,6 +88,13 @@ class Position {
 
     boolean isOutOfBounds() {
         return (isOutOfBounds(x) || isOutOfBounds(y));
+    }
 
+    PositionSet getNeighbours() {
+        PositionSet set = new PositionSet();
+        for (Direction direction : Direction.values()) {
+            set.add(this.go(direction));
+        }
+        return set;
     }
 }

@@ -4,8 +4,8 @@ import java.util.LinkedList;
 
 abstract class AI {
 
-    GridElement[][] gridArray;
-    LinkedList<GridElement> snakeList;
+    private GridElement[][] gridArray;
+    private LinkedList<GridElement> snakeList;
 
     Position head;
     Position apple;
