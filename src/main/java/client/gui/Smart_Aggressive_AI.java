@@ -31,7 +31,11 @@ class Smart_Aggressive_AI extends AI{
             }
         }
 
-        return directions.get(0);
+        if (!directions.isEmpty()) {
+            return directions.get(0);
+        } else {
+            return Direction.UP;
+        }
     }
 
     private boolean isCloser(Position position) {
