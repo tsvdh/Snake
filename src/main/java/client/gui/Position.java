@@ -81,4 +81,13 @@ class Position {
         }
         return false;
     }
+
+    private boolean isOutOfBounds(int coordinate) {
+        return coordinate > 19 || coordinate < 0;
+    }
+
+    boolean isOutOfBounds() {
+        return (isOutOfBounds(x) || isOutOfBounds(y));
+
+    }
 }

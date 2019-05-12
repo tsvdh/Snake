@@ -12,16 +12,17 @@ class Smart_Aggressive_AI extends AI{
         ArrayList<Direction> directions = new ArrayList<>(Arrays.asList(Direction.values()));
         ArrayList<Direction> directionsToRemove = new ArrayList<>();
 
+
         for (Direction direction : directions) {
             Position position = head.to(direction);
-            if (position.status().equals("snake") && !position.isTail()) {
+            if (position.isOutOfBounds()) {
+                directionsToRemove.add(direction);
+            }
+            else if (position.status().equals("snake") && !position.isTail()) {
                 directionsToRemove.add(direction);
             }
         }
-
-        for (Direction direction : directionsToRemove) {
-            directions.remove(direction);
-        }
+        directions.removeAll(directionsToRemove);
 
 
         for (Direction direction : directions) {
