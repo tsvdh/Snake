@@ -170,13 +170,11 @@ class SnakePage {
             }
         });
 
-        scene.setOnMouseMoved(event -> {
-            scene.setCursor(Cursor.DEFAULT);
-        });
+        scene.setOnMouseMoved(
+                event -> scene.setCursor(Cursor.DEFAULT));
 
-        stage.setOnCloseRequest(event -> {
-            scheduler.shutdown();
-        });
+        stage.setOnCloseRequest(
+                event -> scheduler.shutdown());
 
         //Starting the game
         setUpGame();
@@ -297,19 +295,22 @@ class SnakePage {
         scheduler = Executors.newSingleThreadScheduledExecutor();
 
         String difficulty = Difficulty.getDifficulty();
-
-        switch (difficulty) {
-            case "easy":
-                period = 300;
-                break;
-            case "normal":
-                period = 200;
-                break;
-            case "hard":
-                period = 100;
-                break;
-            default:
-                period = -1;
+        if (difficulty == null) {
+            period = -1;
+        } else {
+            switch (difficulty) {
+                case "easy":
+                    period = 300;
+                    break;
+                case "normal":
+                    period = 200;
+                    break;
+                case "hard":
+                    period = 100;
+                    break;
+                default:
+                    period = -1;
+            }
         }
 
         ai = new Smart_Aggressive_AI();
