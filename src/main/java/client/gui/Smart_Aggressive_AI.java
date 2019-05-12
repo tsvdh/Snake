@@ -2,6 +2,10 @@ package client.gui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
+import java.util.Set;
 
 class Smart_Aggressive_AI extends AI{
 
@@ -27,7 +31,12 @@ class Smart_Aggressive_AI extends AI{
 
         if (directions.size() == 2) {
             if (Direction.areOpposites(directions.get(0), directions.get(1))) {
-                System.out.println("Breadth first search for apple in one of the directions.");
+                if (isClosed(directions.get(0))) {
+                    return directions.get(1);
+                }
+                if (isClosed(directions.get(1))){
+                    return directions.get(0);
+                }
             }
         }
 
@@ -51,5 +60,44 @@ class Smart_Aggressive_AI extends AI{
         int deltaY = Math.abs((head.getY() - apple.getY())) - Math.abs((position.getY() - apple.getY()));
 
         return  (deltaX == 1 || deltaY == 1);
+    }
+
+    private boolean isClosed(Direction direction) {
+        if (head.go(direction).getStatus().equals("apple")) {
+            return false;
+        }
+
+        Set<Position> colored = new HashSet<>();
+        Queue<Position> queue = new LinkedList<>();
+
+        colored.add(head.go(direction));
+        queue.add(head.go(direction));
+
+        //while (!queue.isEmpty()) {
+        for (int i = 0; i < 400; i++) {
+            //System.out.println(colored.size());
+            System.out.println(queue.size());
+
+            Position current = queue.remove();
+            PositionSet neighbours = current.getNeighbours();
+            neighbours.filter("empty");
+
+            for (Position position : neighbours) {
+                if (!colored.contains(position)) {
+                    colored.add(position);
+                    queue.add(position);
+
+                    if (position.getStatus().equals("apple")) {
+                        System.out.println("closed");
+                        return false;
+                    }
+                }
+            }
+
+            System.out.println(queue.size());
+            System.out.println("---");
+        }
+
+        return true;
     }
 }

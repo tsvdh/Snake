@@ -93,7 +93,9 @@ class Position {
     PositionSet getNeighbours() {
         PositionSet set = new PositionSet();
         for (Direction direction : Direction.values()) {
-            set.add(this.go(direction));
+            if (!this.go(direction).isOutOfBounds()) {
+                set.add(this.go(direction));
+            }
         }
         return set;
     }
