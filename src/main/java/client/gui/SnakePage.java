@@ -199,7 +199,7 @@ class SnakePage {
                     addHead(x, y);
                     spawnApple();
                     playing = true;
-                    if (snakeList.size() >= 25) {
+                    if (snakeList.size() == 20) {
                         scheduler.shutdownNow();
                         scheduler = Executors.newSingleThreadScheduledExecutor();
                         scheduler.scheduleAtFixedRate(new UpdateThread(), 0, period, TimeUnit.MILLISECONDS);
@@ -240,10 +240,7 @@ class SnakePage {
             nextDirection = null;
         }
 
-        //Direction aiDirection = ai.nextDirection();
-        //System.out.println(aiDirection);
-        //direction = aiDirection;
-
+        
         direction = ai.nextDirection();
 
         //currentTime = System.currentTimeMillis() - currentTime;
@@ -315,7 +312,7 @@ class SnakePage {
 
         ai = new Smart_Aggressive_AI();
 
-        scheduler.scheduleAtFixedRate(new UpdateThread(), 0, 100, TimeUnit.MILLISECONDS);
+        scheduler.scheduleAtFixedRate(new UpdateThread(), 0, period / 2, TimeUnit.MILLISECONDS);
     }
 
     private static void setDirection(Direction direction) {

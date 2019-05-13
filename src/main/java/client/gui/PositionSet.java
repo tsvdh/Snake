@@ -9,13 +9,26 @@ class PositionSet extends HashSet<Position> {
         super();
     }
 
-    void filter(String status) {
+    void remove(String status) {
         Set<Position> toRemove = new HashSet<>();
         for (Position position : this) {
-            if (!position.getStatus().equals(status)) {
+            if (position.getStatus().equals(status)) {
                 toRemove.add(position);
             }
         }
         this.removeAll(toRemove);
+    }
+
+    @Override
+    public boolean contains(Object other) {
+        if (!(other instanceof Position)) {
+            return false;
+        }
+        for (Position position : this) {
+            if (position.equals(other)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

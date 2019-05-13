@@ -2,10 +2,8 @@ package client.gui;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.Set;
 
 class Smart_Aggressive_AI extends AI{
 
@@ -31,6 +29,7 @@ class Smart_Aggressive_AI extends AI{
 
         if (directions.size() == 2) {
             if (Direction.areOpposites(directions.get(0), directions.get(1))) {
+
                 if (isClosed(directions.get(0))) {
                     return directions.get(1);
                 }
@@ -59,28 +58,26 @@ class Smart_Aggressive_AI extends AI{
         int deltaX = Math.abs((head.getX() - apple.getX())) - Math.abs((position.getX() - apple.getX()));
         int deltaY = Math.abs((head.getY() - apple.getY())) - Math.abs((position.getY() - apple.getY()));
 
-        return  (deltaX == 1 || deltaY == 1);
+        return (deltaX == 1 || deltaY == 1);
     }
 
     private boolean isClosed(Direction direction) {
+
         if (head.go(direction).getStatus().equals("apple")) {
             return false;
         }
 
-        Set<Position> colored = new HashSet<>();
+        PositionSet colored = new PositionSet();
         Queue<Position> queue = new LinkedList<>();
 
         colored.add(head.go(direction));
         queue.add(head.go(direction));
 
-        //while (!queue.isEmpty()) {
-        for (int i = 0; i < 400; i++) {
-            //System.out.println(colored.size());
-            System.out.println(queue.size());
+        while (!queue.isEmpty()) {
 
             Position current = queue.remove();
             PositionSet neighbours = current.getNeighbours();
-            neighbours.filter("empty");
+            neighbours.remove("snake");
 
             for (Position position : neighbours) {
                 if (!colored.contains(position)) {
@@ -88,16 +85,13 @@ class Smart_Aggressive_AI extends AI{
                     queue.add(position);
 
                     if (position.getStatus().equals("apple")) {
-                        System.out.println("closed");
+                        System.out.println("open");
                         return false;
                     }
                 }
             }
-
-            System.out.println(queue.size());
-            System.out.println("---");
         }
-
+        System.out.println("closed");
         return true;
     }
 }

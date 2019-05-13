@@ -43,8 +43,17 @@ class GridElement extends Button {
     }
 
     void setHead() {
-        this.STATUS = "head";
+        this.STATUS = "snake";
         this.setStyle("-fx-background-color: darkgreen;"
+                + "-fx-border-style: solid;"
+                + "-fx-border-width: 0.5px;"
+                + "-fx-border-color: black;"
+                + "-fx-border-radius: 0px");
+    }
+
+    void setColored() {
+        this.STATUS = "colored";
+        this.setStyle("-fx-background-color: lightcoral;"
                 + "-fx-border-style: solid;"
                 + "-fx-border-width: 0.5px;"
                 + "-fx-border-color: black;"
