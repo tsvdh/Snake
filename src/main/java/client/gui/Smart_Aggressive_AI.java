@@ -85,13 +85,12 @@ class Smart_Aggressive_AI extends AI{
                     queue.add(position);
 
                     if (position.getStatus().equals("apple")) {
-                        System.out.println("open");
                         return false;
                     }
                 }
             }
         }
-        System.out.println("closed");
+
         return true;
     }
 }
